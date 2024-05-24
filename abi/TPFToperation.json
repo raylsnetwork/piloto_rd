@@ -1,0 +1,580 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_endpointAddr",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_selicChainId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_cbdcResourceId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_tpftResourceId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_dvpResourceId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_rtResourceId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "_dvpAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "unitPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tpftAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "calculateFinancialValue",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "operationId",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainIdSeller",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainIdBuyer",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "accountSeller",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "accountBuyer",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "acronym",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "code",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "maturityDate",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct TPFtData",
+            "name": "tpftData",
+            "type": "tuple"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tpftAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum TPFtOpStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "isBetweenClients",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct TPFtOperation",
+        "name": "_op",
+        "type": "tuple"
+      }
+    ],
+    "name": "callRegisterOperation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "cbdcResourceId",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "operationId",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainIdSeller",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainIdBuyer",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "accountSeller",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "accountBuyer",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "acronym",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "code",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "maturityDate",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct TPFtData",
+            "name": "tpftData",
+            "type": "tuple"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tpftAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum TPFtOpStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "isBetweenClients",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct TPFtOperation",
+        "name": "_op",
+        "type": "tuple"
+      }
+    ],
+    "name": "claimOperation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dvpAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dvpResourceId",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "endpoint",
+    "outputs": [
+      {
+        "internalType": "contract IRaylsEndpoint",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getUnitPriceDecimals",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "operations",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "operationId",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "chainIdSeller",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "chainIdBuyer",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "accountSeller",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "accountBuyer",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "acronym",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturityDate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct TPFtData",
+        "name": "tpftData",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tpftAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum TPFtOpStatus",
+        "name": "status",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "isBetweenClients",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "operationId",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainIdSeller",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainIdBuyer",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "accountSeller",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "accountBuyer",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "acronym",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "code",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "maturityDate",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct TPFtData",
+            "name": "tpftData",
+            "type": "tuple"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tpftAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum TPFtOpStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "isBetweenClients",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct TPFtOperation",
+        "name": "_op",
+        "type": "tuple"
+      }
+    ],
+    "name": "receiveOperationUpdate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "operationId",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainIdSeller",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainIdBuyer",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "accountSeller",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "accountBuyer",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "acronym",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "code",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "maturityDate",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct TPFtData",
+            "name": "tpftData",
+            "type": "tuple"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tpftAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum TPFtOpStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "isBetweenClients",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct TPFtOperation",
+        "name": "_op",
+        "type": "tuple"
+      }
+    ],
+    "name": "requestRevertOperation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "resourceId",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rtResourceId",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "tpftResourceId",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
