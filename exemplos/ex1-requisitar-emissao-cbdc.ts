@@ -14,19 +14,15 @@ async function example1() {
 
     const amountRequested = ethers.parseUnits("3000", 2);
 
-    // Instanciando Endpoint da PL de origem & recuperando WalletDefault
     const endpoint = await ethers.getContractAt(
         IEndpointABI, 
         endpointContractAddr, 
         deployerSigner
     );
     const walletDefault = await endpoint.resourceIdToContractAddress(
-        ethers.id(
-            "WalletDefault" + process.env.ENV_VERSION
-        )
+        ethers.id("WalletDefault")
     );
 
-    // Verifica saldo de CBDC antes de invocar o requestToMint
     console.log("[DEBUG] Checking balance before...");
     let balanceBefore = await getBalanceCBDCSync(
         endpoint, 
@@ -36,9 +32,8 @@ async function example1() {
     ) ?? BigInt(0);
     console.log("[DEBUG] balanceBefore:", balanceBefore);
 
-    // Instanciando STR na PL de origem
     const strAddress = await endpoint.resourceIdToContractAddress(
-        ethers.id("STR" + process.env.ENV_VERSION)
+        ethers.id("STR")
     );
     const strContract = await ethers.getContractAt(
         StrABI, 
@@ -50,7 +45,6 @@ async function example1() {
     const txRequestToMint = await strContract.requestToMint(amountRequested);
     await txRequestToMint.wait();
 
-    //Check balances after requestToMint
     const balanceAfter = await TimeoutExecution(async (retry) => {
         console.log("[DEBUG] Waiting CBDC balance to be updated:", retry);
         const balanceCBDC = await getBalanceCBDCSync(

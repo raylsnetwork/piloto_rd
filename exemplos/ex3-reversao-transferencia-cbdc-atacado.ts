@@ -5,11 +5,12 @@ import CbdcABI from "../abi/CBDC.json";
 
 async function example3() {
     const { 
-        endpointContractAddr, 
-        deployerSigner, 
+        endpointContractAddr,
         cbdcResourceId,
         wdResourceId
     } = await getPLInformation();
+
+    const [deployerSigner] = await ethers.getSigners();
 
     const chainIdDestination = process.env.DEST_CHAINID ?? 0;
     const randomWallet = ethers.Wallet.createRandom();

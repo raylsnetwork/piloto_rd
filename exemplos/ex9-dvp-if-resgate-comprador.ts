@@ -10,11 +10,12 @@ import tpftOpContractABI from "../abi/TPFToperation.json";
 async function example9() {
     const { 
         chainId,
-        endpointContractAddr, 
-        deployerSigner,
+        endpointContractAddr,
         tpftResourceId,
         tpftOpResourceId
     } = await getPLInformation();
+
+    const [deployerSigner] = await ethers.getSigners();
 
     const chainIdDestination = process.env.DEST_CHAINID ?? 0;
     const destinationWd = process.env.DEST_RESERVES_ACC ?? "";
@@ -23,22 +24,22 @@ async function example9() {
     const tpftOperationPrice = BigInt(500);
 
     const tpftToMintData =  { 
-        acronym: 'LTN', 
-        code: 'BRSTNCLTN7D3', 
-        maturityDate: 1716584638 
+        acronym: '<acrônimo do título público>', 
+        code: '<código do título público>', 
+        maturityDate: <data de validade do título público> 
     };
 
     const opData = {
-        operationId: Math.floor(new Date().getTime() / 1000).toString(), // ID da operação
-        chainIdSeller: chainIdDestination, // ID vendedor, tpft owner
-        chainIdBuyer: chainId, // ID comprador, cbdc owner
-        accountSeller: destinationWd, // Endereço do vendedor
-        accountBuyer: deployerSigner.address, // Endereço do comprador
-        tpftData: tpftToMintData,
-        tpftAmount: tpftOperationAmount, // Quantidade de TPFt
-        price: tpftOperationPrice, // Preço
-        status: 0, // status da operação inicialmente zerado (EMPTY)
-        isBetweenClients: false // Se é, ou não, entre clientes
+        operationId: '<ID da operação>',
+        chainIdSeller: <Chain ID da PL vendedora>,
+        chainIdBuyer: <Chain ID da PL compradora>,
+        accountSeller: '<conta vendedora>',
+        accountBuyer: '<conta compradora>',
+        tpftData: <TPFt data>,
+        tpftAmount: <Quantidade de TPFt da operação>,
+        price: <Preço a ser pago por TPFt>,
+        status: <Estado da operação (geralmente é igual a zero)>,
+        isBetweenClients: <True, apenas quando for operação entre clientes. False, caso contrário.>
     };
 
     // Recuperando contratos Endpoint das PLs envolvidas
@@ -47,6 +48,21 @@ async function example9() {
         endpointContractAddr, 
         deployerSigner
     );
+
+    const tpftOpAddress = await endpointContract
+        .resourceIdToContractAddress(
+            tpftOpResourceId
+        );
+
+    const tpftOpContract = await ethers.getContractAt(
+        tpftOpContractABI, 
+        tpftOpAddress, 
+        deployerSigner
+    );
+
+    const op = await tpftOpContract.operations(opData.operationId);
+    const prevStatus = op.status;
+    console.log("[DEBUG] prevStatus:", prevStatus);
     
     // Checando saldo de TPFt antes do resgate
     const balanceBefore = await getBalanceTPFTSync(
@@ -59,19 +75,19 @@ async function example9() {
     console.log("[DEBUG] balanceBefore:", balanceBefore);
  
     // Seller invocando o resgate do DVP
-    console.log("[DEBUG] Registering operation as seller...");
-    const tpftOpAddress = await endpointContract
-        .resourceIdToContractAddress(
-            tpftOpResourceId
-        );
-    const tpftOpContract = await ethers.getContractAt(
-        tpftOpContractABI, 
-        tpftOpAddress, 
-        deployerSigner
-    );
-    let txTPFT = await tpftOpContract.claimOperation(opData);
-    await txTPFT.wait();
+    console.log("[DEBUG] Claiming operation as buyer...");
+    let txClaim = await tpftOpContract.claimOperation(opData);
+    await txClaim.wait();
 
+    // Checando atualização de estado após solicitação de resgate
+    const newStatus = await TimeoutExecution(async (retry) => {
+        console.log("[DEBUG] Waiting register response from DVP contract", retry);
+        const _op = await tpftOpContract.operations(opData.operationId);
+        if (_op.status > prevStatus) {
+            return [true, _op.status];
+        } else return [false, false];
+    });
+    console.log("[DEBUG] newStatus:", newStatus);
     
     // Checando saldo de CBDC depois do resgate
     const balanceAfter = await TimeoutExecution(async (retry) => {
@@ -85,20 +101,10 @@ async function example9() {
             opData.tpftData
         );
         if (balanceTpfT != balanceBefore) {
-            console.log("[DEBUG] TPFT Balance B.", balanceTpfT);
             return [true, balanceTpfT];
         } else return [false, BigInt(0)];
     });
     console.log("[DEBUG] balanceAfter", balanceAfter);
-   
-    await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting register response from DVP contract", retry);
-        const _op = await tpftOpContract.operations(opData.operationId);
-        if (_op.status != BigInt(3)) {
-            console.log("[DEBUG] Status:", _op.status);
-            return [true, _op.status];
-        } else return [false, false];
-    });
 }
 
 example9()

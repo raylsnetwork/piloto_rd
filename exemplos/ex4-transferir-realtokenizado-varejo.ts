@@ -6,20 +6,20 @@ import RealTokenizadoABI from "../abi/RealTokenizado.json";
 
 async function example4() {
     const { 
-        endpointContractAddr, 
-        deployerSigner,
+        endpointContractAddr,
         clientSigner,
         cbdcResourceId,
         wdResourceId,
         rtResourceId
     } = await getPLInformation();
 
+    const [deployerSigner] = await ethers.getSigners();
+
     const chainIdDestination = process.env.DEST_CHAINID ?? 0;
     const destClientAcc = process.env.DEST_CLIENT_ACC ?? 0;
 
     const amountToMintAndSwap = ethers.parseUnits("10", 2);
 
-    // IF A: Recuperando endereços CBDC contract, Real Tokenizado contract e Wallet Default IF A
     const endpointA = await ethers.getContractAt(
         IendpointContractABI, 
         endpointContractAddr, 
@@ -36,7 +36,6 @@ async function example4() {
         cbdcResourceId
     );
 
-    // Mint Real Tokenizado para que haja saldo ao transferir
     const realtokenizadoA = await ethers.getContractAt(
         RealTokenizadoABI, 
         realTokenizadoAddressIFA, 
@@ -52,7 +51,6 @@ async function example4() {
         clientSigner
     ); 
 
-    // Checando saldos antes do envio
     const balancRTBefore = await getBalanceRTSync(
         endpointA, 
         rtResourceId, 
@@ -74,12 +72,10 @@ async function example4() {
         chainIdDestination, 
         cbdcResourceId, 
         destClientAcc, 
-        amountToMintAndSwap, 
-        { gasLimit: 9000000000 }
+        amountToMintAndSwap
     );
     await txSwap.wait();
 
-    // Checando saldos antes do envio
     const balancRTAfter = await getBalanceRTSync(
         endpointA, 
         rtResourceId, 

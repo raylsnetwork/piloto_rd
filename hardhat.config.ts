@@ -25,7 +25,8 @@ const config: HardhatUserConfig = {
     raylsB: {
       url: "http://parfin-privacy-ledger-04.api.blockchain-sandbox.parfin.aws",
       accounts: [
-        "c39fc3329b0c349ffdd9874bf8f9a2f5bb51f89ee6a4175945e019c18dc29019"
+        "c39fc3329b0c349ffdd9874bf8f9a2f5bb51f89ee6a4175945e019c18dc29019",
+        "223fbc93bb95d920ea5a13a2453cdb2f7de700a94df858c8ed843ad08caedb5a"
       ]
     }
   },

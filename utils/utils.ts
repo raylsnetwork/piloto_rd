@@ -23,11 +23,11 @@ export async function getPLInformation() {
     const clientPrivateKey = process.env.PRIVATEKEY_CLIENT ?? "";
     const clientSigner = new ethers.Wallet(clientPrivateKey, provider);
 
-    const strResourceId = ethers.id("STR" + process.env.ENV_VERSION);
-    const wdResourceId = ethers.id("WalletDefault" + process.env.ENV_VERSION);
-    const rtResourceId = ethers.id("RealTokenizado" + process.env.ENV_VERSION);
-    const dvpResourceId = ethers.id("DVP" + process.env.ENV_VERSION);
-    const tpftOpResourceId = ethers.id("TPFToperation" + process.env.ENV_VERSION)
+    const strResourceId = ethers.id("STR");
+    const wdResourceId = ethers.id("WalletDefault");
+    const rtResourceId = ethers.id("RealTokenizado");
+    const dvpResourceId = ethers.id("DVP");
+    const tpftOpResourceId = ethers.id("TPFToperation");
 
     return {
         chainId,
@@ -57,9 +57,7 @@ export async function getBalanceRTSync(endpointContract: any, resourceId: string
 }
 
 export async function getBalanceCBDCSync(endpointContract: any, resourceId: string | undefined, signer: any, walletBalance: string) {
-    console.log("[DEBUG] resourceId:", resourceId);
     const addressCBDC = await endpointContract.resourceIdToContractAddress(resourceId ?? "");
-    console.log("[DEBUG] addressCBDC.target:", addressCBDC.target);
     if (addressCBDC === ethers.ZeroAddress){
         return undefined;
     }
