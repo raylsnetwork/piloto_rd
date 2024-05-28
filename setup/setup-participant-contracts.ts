@@ -1,13 +1,13 @@
 import { ethers } from "hardhat";
 
-import IEndpointABI from "./abi/IEndpoint.json";
-import StrABI from "./abi/STR.json";
-import RealTokenizadoABI from "./abi/RealTokenizado.json";
-import TPFTopABI from "./abi/TPFToperation.json";
+import IEndpointABI from "../abi/IEndpoint.json";
+import StrABI from "../abi/STR.json";
+import RealTokenizadoABI from "../abi/RealTokenizado.json";
+import TPFTopABI from "../abi/TPFToperation.json";
 
-import StrBytecode from "./bytecode/STR.json";
-import RealTokenizadoBytecode from "./bytecode/RealTokenizado.json";
-import TPFTopBytecode from "./bytecode/TPFToperation.json";
+import StrBytecode from "../bytecode/STR.json";
+import RealTokenizadoBytecode from "../bytecode/RealTokenizado.json";
+import TPFTopBytecode from "../bytecode/TPFToperation.json";
 
 async function main() {
     const endpointAddrIf = process.env.ENDPOINT_ADDR ?? "";
