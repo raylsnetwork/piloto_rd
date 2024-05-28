@@ -99,6 +99,8 @@ Os exemplos foram escritos em Typescript, utilizando o framework [Hardhat](https
 
 Os códigos foram testados em sua funcionalidade, todavia, não foram realizadas auditorias nem análises de vulnerabilidade. Não é recomendado o uso de tais códigos em produção, especialmente o uso de chaves privadas diretamente no arquivo de configuração do Hardhat.
 
+Antes de executar os scripts de exemplo, é imperativo que sejam preenchidas as informações do arquivo [.env](.env.example). Em seguida, executar o script de setup, [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts). Por fim, os scripts de exemplo exigem que as informações necessárias para executar as transações sejam preenchidas. Tais informações estão delineadas entre parênteses angulares (por exemplo: `<informações a serem preenchidas>`).
+
 - [cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-adicionar-conta-allowlist.ts): autoriza uma conta a receber CDBC; 
 
 - [cbdc-remover-conta-allowlist.ts](./exemplos/cbdc-remover-conta-allowlist.ts): desautoriza uma conta a receber CDBC;
