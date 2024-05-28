@@ -40,7 +40,6 @@ async function main() {
     console.log("[DEBUG] Deploying and registering STR contract ...");
     
     const strContractFactory = new ethers.ContractFactory(StrABI, StrBytecode, deployerSigner);
-    // const strContractFactory = await ethers.getContractFactory("STR", signerIf);
     const strContract = await strContractFactory.deploy(
         endpointAddrIf,
         chainIdBacen,
@@ -56,7 +55,6 @@ async function main() {
     console.log("[DEBUG] Deploying and registering RealTokenizado contract ...");
     
     const rtContractFactory = new ethers.ContractFactory(RealTokenizadoABI, RealTokenizadoBytecode, deployerSigner);
-    // const rtContractFactory = await ethers.getContractFactory("RealTokenizado", signerIf);
     const rtContract = await rtContractFactory.deploy("RealTokenizado", "R$");
     await rtContract.waitForDeployment();
     const txRegRT = await endpointIf.registerResourceId(rtResourceId, rtContract.target);
@@ -66,7 +64,6 @@ async function main() {
     // Deploy e registro do contrato DVP
     console.log("[DEBUG] Deploying and registering TPFToperation contract ...");
     const tpftOpContractFactory = new ethers.ContractFactory(TPFTopABI, TPFTopBytecode, deployerSigner);
-    // const tpftOpContractFactory = await ethers.getContractFactory("TPFToperation", signerIf);
     const tpftOpContract = await tpftOpContractFactory.deploy(
         endpointAddrIf, 
         chainIdSelic,
