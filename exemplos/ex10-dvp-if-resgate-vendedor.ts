@@ -41,7 +41,6 @@ async function example10() {
         isBetweenClients: <True, apenas quando for operação entre clientes. False, caso contrário.>
     };
 
-    // Recuperando contratos Endpoint das PLs envolvidas
     const endpointContract = await ethers.getContractAt(
         IendpointContractABI, 
         endpointContractAddr, 
@@ -63,7 +62,6 @@ async function example10() {
     const prevStatus = op.status;
     console.log("[DEBUG] prevStatus:", prevStatus);
 
-    // Checando saldo de CBDC antes do resgate
     const balanceBefore = await getBalanceCBDCSync(
         endpointContract, 
         cbdcResourceId, 
@@ -72,12 +70,10 @@ async function example10() {
     );
     console.log("[DEBUG] balanceBefore", balanceBefore);
  
-    // Seller invocando o resgate do DVP
     console.log("[DEBUG] Claiming operation as seller...");
     let txClaim = await tpftOpContract.claimOperation(opData);
     await txClaim.wait();
 
-    // Checando atualização de estado após solicitação de resgate
     const newStatus = await TimeoutExecution(async (retry) => {
         console.log("[DEBUG] Waiting claim response from DVP contract", retry);
         const _op = await tpftOpContract.operations(opData.operationId);
@@ -87,7 +83,6 @@ async function example10() {
     });
     console.log("[DEBUG] newStatus:", newStatus);
     
-    // Checando saldo de CBDC depois do resgate
     const balanceAfter = await TimeoutExecution(async (retry) => {
         console.log("[DEBUG] Waiting CBDC balance to be updated:", retry);
         const balanceCBDC = await getBalanceCBDCSync(

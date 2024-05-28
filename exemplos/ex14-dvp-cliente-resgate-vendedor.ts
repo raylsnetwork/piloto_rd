@@ -46,7 +46,6 @@ async function example14() {
         isBetweenClients: <True, apenas quando for operação entre clientes. False, caso contrário.>
     };
 
-    // Recuperando contratos Endpoint das PLs envolvidas
     const endpointContract = await ethers.getContractAt(
         IendpointContractABI, 
         endpointContractAddr, 
@@ -84,7 +83,6 @@ async function example14() {
     );
     console.log("[DEBUG] balanceRTBefore", balanceRTBefore);
     
-    // Buyer invocando o registro do DVP
     console.log("[DEBUG] Claiming operation as seller...");
     const txClaim = await tpftOpContract.claimOperation(opData);
     await txClaim.wait();

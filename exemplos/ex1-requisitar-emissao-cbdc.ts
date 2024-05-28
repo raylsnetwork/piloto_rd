@@ -1,5 +1,9 @@
 import { ethers } from "hardhat";
-import { getPLInformation, getBalanceCBDCSync, TimeoutExecution } from "../utils/utils";
+import { 
+    getPLInformation, 
+    getBalanceCBDCSync, 
+    TimeoutExecution 
+} from "../utils/utils";
 
 import IEndpointABI from "../abi/IEndpoint.json";
 import StrABI from "../abi/STR.json";

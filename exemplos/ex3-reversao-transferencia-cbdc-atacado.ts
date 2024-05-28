@@ -1,5 +1,9 @@
 import { ethers } from "hardhat";
-import { getBalanceCBDCSync, getPLInformation, TimeoutExecution } from "../utils/utils";
+import { 
+    getBalanceCBDCSync, 
+    getPLInformation, 
+    TimeoutExecution 
+} from "../utils/utils";
 import IendpointContractABI from "../abi/IEndpoint.json";
 import CbdcABI from "../abi/CBDC.json";
 
@@ -30,7 +34,11 @@ async function example3() {
         cbdcResourceId
     );
 
-    const cbdcContract = await ethers.getContractAt(CbdcABI, cbdcAddress, deployerSigner);
+    const cbdcContract = await ethers.getContractAt(
+        CbdcABI, 
+        cbdcAddress, 
+        deployerSigner
+    );
 
     console.log("[DEBUG] Checking balance at ORIGIN before...");
     const balanceBefore = await getBalanceCBDCSync(

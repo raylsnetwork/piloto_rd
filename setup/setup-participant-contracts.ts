@@ -26,20 +26,32 @@ async function main() {
     const tpftOpResourceId = ethers.id("TPFToperation");
 
     // Instanciando IEndpoint para registrar os Resource Ids relevantes
-    const endpointIf = await ethers.getContractAt(IEndpointABI, endpointAddrIf,
+    const endpointIf = await ethers.getContractAt(
+        IEndpointABI, 
+        endpointAddrIf,
         deployerSigner
     );
 
     // Registrando Wallet Default
     console.log("[DEBUG] Registering Wallet Default's Resource Id...");
-    const txRegWD = await endpointIf.registerResourceId(wdResourceId, deployerSigner.address);
+    const txRegWD = await endpointIf.registerResourceId(
+        wdResourceId, 
+        deployerSigner.address
+    );
     await txRegWD.wait();
-    console.log(`[DEBUG] Wallet Default registered to Resource Id '${wdResourceId}' with address '${deployerSigner.address}'.`);
+    console.log(
+        `[DEBUG] 
+        Wallet Default registered to Resource Id '${wdResourceId}' 
+        with address '${deployerSigner.address}'.`
+    );
 
     // Deploy e registro do contrato STR
     console.log("[DEBUG] Deploying and registering STR contract ...");
-    
-    const strContractFactory = new ethers.ContractFactory(StrABI, StrBytecode, deployerSigner);
+    const strContractFactory = new ethers.ContractFactory(
+        StrABI, 
+        StrBytecode, 
+        deployerSigner
+    );
     const strContract = await strContractFactory.deploy(
         endpointAddrIf,
         chainIdBacen,
@@ -47,23 +59,44 @@ async function main() {
         wdResourceId
     )
     await strContract.waitForDeployment();
-    const txRegSTR = await endpointIf.registerResourceId(strResourceId, strContract.target);
+    const txRegSTR = await endpointIf.registerResourceId(
+        strResourceId, 
+        strContract.target
+    );
     await txRegSTR.wait();
-    console.log(`[DEBUG] STR deployed and registered to Resource Id '${strResourceId}' with address '${strContract.target}'.`);
+    console.log(`
+        [DEBUG] 
+        STR deployed and registered to Resource Id '${strResourceId}' 
+        with address '${strContract.target}'.`
+    );
 
     // Deploy e registro do contrato RealTokenizado
     console.log("[DEBUG] Deploying and registering RealTokenizado contract ...");
-    
-    const rtContractFactory = new ethers.ContractFactory(RealTokenizadoABI, RealTokenizadoBytecode, deployerSigner);
+    const rtContractFactory = new ethers.ContractFactory(
+        RealTokenizadoABI, 
+        RealTokenizadoBytecode, 
+        deployerSigner
+    );
     const rtContract = await rtContractFactory.deploy("RealTokenizado", "R$");
     await rtContract.waitForDeployment();
-    const txRegRT = await endpointIf.registerResourceId(rtResourceId, rtContract.target);
+    const txRegRT = await endpointIf.registerResourceId(
+        rtResourceId, 
+        rtContract.target
+    );
     await txRegRT.wait();
-    console.log(`[DEBUG] RealTokenizado deployed and registered to Resource Id '${rtResourceId}' with address '${rtContract.target}'.`);
+    console.log(`
+        [DEBUG] 
+        RealTokenizado deployed and registered to Resource Id '${rtResourceId}' 
+        with address '${rtContract.target}'.`
+    );
 
     // Deploy e registro do contrato DVP
     console.log("[DEBUG] Deploying and registering TPFToperation contract ...");
-    const tpftOpContractFactory = new ethers.ContractFactory(TPFTopABI, TPFTopBytecode, deployerSigner);
+    const tpftOpContractFactory = new ethers.ContractFactory(
+        TPFTopABI, 
+        TPFTopBytecode, 
+        deployerSigner
+    );
     const tpftOpContract = await tpftOpContractFactory.deploy(
         endpointAddrIf, 
         chainIdSelic,
@@ -74,9 +107,16 @@ async function main() {
         dvpAddress
     )
     await tpftOpContract.waitForDeployment();
-    const txRegOpClaim = await endpointIf.registerResourceId(tpftOpResourceId, tpftOpContract.target);
+    const txRegOpClaim = await endpointIf.registerResourceId(
+        tpftOpResourceId, 
+        tpftOpContract.target
+    );
     await txRegOpClaim.wait();
-    console.log(`[DEBUG] TPFToperation deployed and registered to Resource Id '${tpftOpResourceId}' with address '${rtContract.target}'.`);
+    console.log(`
+        [DEBUG] 
+        TPFToperation deployed and registered to Resource Id '${tpftOpResourceId}' 
+        with address '${rtContract.target}'.`
+    );
 }
 
 main()

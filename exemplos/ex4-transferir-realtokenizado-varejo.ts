@@ -1,5 +1,9 @@
 import { ethers } from "hardhat";
-import { getBalanceCBDCSync, getBalanceRTSync, getPLInformation, TimeoutExecution } from "../utils/utils";
+import { 
+    getBalanceCBDCSync, 
+    getBalanceRTSync, 
+    getPLInformation 
+} from "../utils/utils";
 import IendpointContractABI from "../abi/IEndpoint.json";
 import CbdcABI from "../abi/CBDC.json";
 import RealTokenizadoABI from "../abi/RealTokenizado.json";
@@ -42,7 +46,10 @@ async function example4() {
         deployerSigner
     );
     console.log("[DEBUG] Minting Real Tokenizado for the client at origin...");
-    const txMint = await realtokenizadoA.mint(clientSigner.address, amountToMintAndSwap);
+    const txMint = await realtokenizadoA.mint(
+        clientSigner.address, 
+        amountToMintAndSwap
+    );
     await txMint.wait();
 
     const cbdcContract = await ethers.getContractAt(

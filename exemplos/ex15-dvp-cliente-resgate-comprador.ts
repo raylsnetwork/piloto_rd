@@ -43,7 +43,6 @@ async function example15() {
         isBetweenClients: <True, apenas quando for operação entre clientes. False, caso contrário.>
     };
 
-    // Recuperando contratos Endpoint das PLs envolvidas
     const endpointContract = await ethers.getContractAt(
         IendpointContractABI, 
         endpointContractAddr, 
@@ -65,7 +64,6 @@ async function example15() {
     const prevStatus = op.status;
     console.log("[DEBUG] prevStatus:", prevStatus);
     
-    // Checando saldo de TPFt antes do registro
     const balanceBefore = await getBalanceTPFTSync(
         endpointContract, 
         tpftResourceId, 
@@ -75,7 +73,6 @@ async function example15() {
     );
     console.log("[DEBUG] balanceBefore:", balanceBefore);
     
-    // Seller invocando o registro do DVP
     console.log("[DEBUG] Claiming operation as buyer...");
     let txOpReg = await tpftOpContract.claimOperation(opData);
     await txOpReg.wait();
@@ -88,7 +85,6 @@ async function example15() {
         } else return [false, false];
     });
     console.log("[DEBUG] newStatus:", newStatus);
-
 
     const balanceAfter = await TimeoutExecution(async (retry) => {
         console.log("[DEBUG] Find tpft balance at SELIC ", retry);
