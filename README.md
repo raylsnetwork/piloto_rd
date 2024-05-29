@@ -101,6 +101,9 @@ Os códigos foram testados em sua funcionalidade, todavia, não foram realizadas
 
 Antes de executar os scripts de exemplo, é imperativo que sejam preenchidas as informações do arquivo [.env](.env.example). Em seguida, executar o script de setup, [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts). Por fim, os scripts de exemplo exigem que as informações necessárias para executar as transações sejam preenchidas. Tais informações estão delineadas entre parênteses angulares (por exemplo: `<informações a serem preenchidas>`).
 
+Para rodar cada um dos scripts abaixo é necessário rodar o comando [RUN] do [Hardhat](https://hardhat.org/). Exemplo abaixo;
+npx hardhat run [./exemplos/cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-adicionar-conta-allowlist.ts) --network [rayls]
+
 - [cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-adicionar-conta-allowlist.ts): autoriza uma conta a receber CDBC; 
 
 - [cbdc-remover-conta-allowlist.ts](./exemplos/cbdc-remover-conta-allowlist.ts): desautoriza uma conta a receber CDBC;

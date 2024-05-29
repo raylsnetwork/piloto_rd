@@ -15,7 +15,7 @@ async function example1() {
     } = await getPLInformation();
 
     const [deployerSigner] = await ethers.getSigners();
-
+console.log(deployerSigner.address);
     const amountRequested = ethers.parseUnits("3000", 2);
 
     const endpoint = await ethers.getContractAt(
