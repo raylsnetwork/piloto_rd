@@ -231,6 +231,58 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_reqNonce",
+        "type": "uint256"
+      }
+    ],
+    "name": "swapAcknowledged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_reqNonce",
+        "type": "uint256"
+      }
+    ],
+    "name": "swapDispatched",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_reqNonce",
+        "type": "uint256"
+      }
+    ],
+    "name": "teleportAtmAcknowledged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_reqNonce",
+        "type": "uint256"
+      }
+    ],
+    "name": "teleportAtmDispatched",
+    "type": "event"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -485,6 +537,29 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_requesterChainId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_walletDefault",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "receiveRequestToMint",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "bytes32",
         "name": "_resourceId",
         "type": "bytes32"
@@ -497,6 +572,16 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_requesterChainId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_reqNonce",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "to",
@@ -527,6 +612,34 @@
       }
     ],
     "name": "receiveTeleport",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_requesterChainId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_reqNonce",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "receiveTeleportAtomic",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -565,29 +678,6 @@
   {
     "inputs": [],
     "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_requesterChainId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_walletDefault",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "requestToMint",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -726,6 +816,32 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
+      }
+    ],
+    "name": "swapAck",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "swapNonce",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "symbol",
     "outputs": [
@@ -765,6 +881,32 @@
       }
     ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
+      }
+    ],
+    "name": "teleportAtmAck",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "teleportAtmNonce",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
