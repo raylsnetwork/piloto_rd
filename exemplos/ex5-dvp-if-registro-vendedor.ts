@@ -38,7 +38,7 @@ async function example5() {
         tpftData: <TPFt data>,
         tpftAmount: <Quantidade de TPFt da operação>,
         price: <Preço a ser pago por TPFt>,
-        status: <Estado da operação (geralmente é igual a zero)>,
+        status: <Estado da operação (p/ vendedor: 1)>,
         isBetweenClients: <True, apenas quando for operação entre clientes. False, caso contrário.>
     };
 

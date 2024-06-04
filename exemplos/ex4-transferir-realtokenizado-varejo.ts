@@ -2,11 +2,18 @@ import { ethers } from "hardhat";
 import { 
     getBalanceCBDCSync, 
     getBalanceRTSync, 
-    getPLInformation 
+    getPLInformation, 
+    TimeoutExecution 
 } from "../utils/utils";
 import IendpointContractABI from "../abi/IEndpoint.json";
 import CbdcABI from "../abi/CBDC.json";
 import RealTokenizadoABI from "../abi/RealTokenizado.json";
+import { Log } from "ethers";
+interface TypedEventLog extends Log {
+    args: {
+        _reqNonce: bigint;
+    };
+}
 
 async function example4() {
     const { 
@@ -46,10 +53,7 @@ async function example4() {
         deployerSigner
     );
     console.log("[DEBUG] Minting Real Tokenizado for the client at origin...");
-    const txMint = await realtokenizadoA.mint(
-        clientSigner.address, 
-        amountToMintAndSwap
-    );
+    const txMint = await realtokenizadoA.mint(clientSigner.address, amountToMintAndSwap);
     await txMint.wait();
 
     const cbdcContract = await ethers.getContractAt(
@@ -82,6 +86,34 @@ async function example4() {
         amountToMintAndSwap
     );
     await txSwap.wait();
+    const recipeTxSwap = await txSwap.wait();
+
+    let prevBlockNumber = recipeTxSwap?.blockNumber ?? 0;
+    let swapNonce = BigInt(0);
+    const dispatchEvents = await cbdcContract.queryFilter(
+        cbdcContract.filters.swapDispatched(),
+        prevBlockNumber,
+        prevBlockNumber
+    ) as TypedEventLog[];
+    if (dispatchEvents.length > 0) {
+        swapNonce = dispatchEvents[0].args._reqNonce;
+    }
+    console.log("[DEBUG] swapNonce:", swapNonce);
+
+    const swapAcknowledged = await TimeoutExecution(async (retry) => {
+        console.log("[DEBUG] Waiting swap acknowledgement", retry);
+        const currentBlockNumber = await ethers.provider.getBlockNumber();
+        const events = await cbdcContract.queryFilter(
+            cbdcContract.filters.swapAcknowledged(),
+            prevBlockNumber,
+            currentBlockNumber
+        ) as TypedEventLog[];
+        prevBlockNumber = currentBlockNumber;
+        if (events.length > 0 && events[0].args._reqNonce == swapNonce) {
+            return [true, events[0].args._reqNonce];
+        } else return [false, BigInt(0)];
+    });
+    console.log("[DEBUG] swapAcknowledged:", swapAcknowledged);
 
     const balancRTAfter = await getBalanceRTSync(
         endpointA, 
