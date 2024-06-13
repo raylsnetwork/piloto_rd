@@ -104,43 +104,65 @@ Antes de executar os scripts de exemplo, é imperativo que sejam preenchidas as 
 Para rodar cada um dos scripts abaixo é necessário rodar o comando [RUN] do [Hardhat](https://hardhat.org/). Exemplo abaixo;
 npx hardhat run [./exemplos/cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-adicionar-conta-allowlist.ts) --network [rayls]
 
-### CBDC no atacado:
+### CBDC (atacado):
 
 - [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts): faz uma soliticação de emissão de novos CBDC para receber em uma conta.
 
   <strong>Pré-requisitos:</strong> 
   
-  1. Antes de mais nada, os contratos da instituição precisam estar implantados no ambiente do participante com a execução do código [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts)
+  1. Antes de mais nada, os contratos da instituição precisam estar implantados no ambiente do participante com a execução do código [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts).
 
-- [ex2-transferir-cbdc-atacado.ts](./exemplos/ex2-transferir-cbdc-atacado.ts): a partir da instituição de origem, envia Real Digital para uma segunda instituição de destino (atacado);
+- [ex2-transferir-cbdc-atacado.ts](./exemplos/ex2-transferir-cbdc-atacado.ts): a partir da instituição de origem, envia Real Digital para uma segunda instituição de destino (atacado).
   
   <strong>Pré-requisitos:</strong> 
   
   1. O endereço que deseja iniciar a transferência necessita de saldo, portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts);
 
-  2. O endereço de destino precisa estar autorizado, via allowlist, na PL da instituição de destino, a receber CDBC. Caso o endereço não tenha autorização, basta que os administradores da PL de destino tenham executado o código [opcional_add-conta-allowlist-cdbc.ts](./exemplos/opcional_add-conta-allowlist-cdbc.ts) para autorizar uma conta a receber CDBC na respectiva PL; 
+  2. O endereço de destino precisa estar autorizado, via allowlist, na PL da instituição de destino, a receber CDBC. Caso o endereço não tenha autorização, basta que os administradores da PL de destino tenham executado o código [opcional_add-conta-allowlist-cdbc.ts](./exemplos/opcional_add-conta-allowlist-cdbc.ts) para autorizar uma conta a receber CDBC na respectiva PL.
 
-- [ex3-reversao-transferencia-cbdc-atacado.ts](./exemplos/ex3-reversao-transferencia-cbdc-atacado.ts): tenta realizar o envio de Real Digital para uma conta não autorizada, mas tem o envio revertido devido à não autorização - para que um endereço esteja autorizado a receber CDBC, o administrador da PL destinatária precisa ter adicionado, previamente, o respectivo endereço;
+- [ex3-reversao-transferencia-cbdc-atacado.ts](./exemplos/ex3-reversao-transferencia-cbdc-atacado.ts): tenta realizar o envio de Real Digital para uma conta não autorizada, mas tem o envio revertido devido à não autorização - para que um endereço esteja autorizado a receber CDBC, o administrador da PL destinatária precisa ter adicionado, previamente, o respectivo endereço.
 
   <strong>Pré-requisitos:</strong> 
 
   1. O endereço que deseja iniciar a transferência necessita de saldo, portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts);
 
-  2. Caso o endereço de destino esteja autorizado a receber CDBCs, no caso deste exemplo,é necessário desautorizar o endereço de destino, através da execução do código [opcional_remove-conta-allowlist-cdbc.ts](./exemplos/opcional_remove-conta-allowlist-cdbc.ts): desautoriza uma conta a receber CDBC;
+  2. Caso o endereço de destino esteja autorizado a receber CDBCs, no caso deste exemplo,é necessário desautorizar o endereço de destino, através da execução do código [opcional_remove-conta-allowlist-cdbc.ts](./exemplos/opcional_remove-conta-allowlist-cdbc.ts): desautoriza uma conta a receber CDBC.
 
-- [ex4-transferir-realtokenizado-varejo.ts](./exemplos/ex4-transferir-realtokenizado-varejo.ts): a partir de um cliente em uma instituição de origem, envia Real Digital da reserva, bem como Real Tokenizado para uma segunda conta de cliente em uma instituição de destino (varejo);
+### Real Tokenizado (varejo):
 
-- [ex5-dvp-if-registro-vendedor.ts](./exemplos/ex5-dvp-if-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras);
+- [ex4-transferir-realtokenizado-varejo.ts](./exemplos/ex4-transferir-realtokenizado-varejo.ts): a partir de um cliente em uma instituição de origem, envia Real Digital da reserva, bem como Real Tokenizado para uma segunda conta de cliente em uma instituição de destino (varejo).
 
-- [ex6-dvp-if-registro-comprador.ts](./exemplos/ex6-dvp-if-registro-comprador.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
+  <strong>Pré-requisitos:</strong>
 
-- [ex7-dvp-if-req-reversao-vendedor.ts](./exemplos/ex7-dvp-if-req-reversao-vendedor.ts): realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras);
+  1. A conta de reservas da instituição da qual se deseja iniciar a transferência necessita de saldo de CBDC, portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts).
 
-- [ex8-dvp-if-req-reversao-comprador.ts](./exemplos/ex8-dvp-if-req-reversao-comprador.ts): realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
+### Delivery versus Payment entre Instituições Financeiras:
+
+- [ex5-dvp-if-registro-vendedor.ts](./exemplos/ex5-dvp-if-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras).
+
+    <strong>Pré-requisitos:</strong>
+
+    1. Antes de mais nada, os contratos da instituição precisam estar implantados no ambiente do participante com a execução do código [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts);
+
+    2. O endereço da conta que deseja realizar a venda precisa de saldo de TPFt. Para tanto é preciso que uma solicitação off-chain seja feita à SELIC para que, então, a SELIC envie os TPFt solicitados à respectiva conta do vendedor.
+
+- [ex6-dvp-if-registro-comprador.ts](./exemplos/ex6-dvp-if-registro-comprador.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras).
+
+    <strong>Pré-requisitos:</strong>
+
+    1. Antes de mais nada, os contratos da instituição precisam estar implantados no ambiente do participante com a execução do código [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts);
+
+    2. O endereço da conta que deseja realizar a compra precisa de saldo de CBDC. Portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts).
+
+- [ex7-dvp-if-req-reversao-vendedor.ts](./exemplos/ex7-dvp-if-req-reversao-vendedor.ts): caso o vendedor precise, realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras);
+
+- [ex8-dvp-if-req-reversao-comprador.ts](./exemplos/ex8-dvp-if-req-reversao-comprador.ts): caso o comprador precise, realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
 
 - [ex9-dvp-if-resgate-comprador.ts](./exemplos/ex9-dvp-if-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras); 
 
 - [ex10-dvp-if-resgate-vendedor.ts](./exemplos/ex10-dvp-if-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras); 
+
+### Delivery versus Payment entre Clientes de Instituições Financeiras:
 
 - [ex11-transferir-tpft-entre-wd-e-cliente.ts](./exemplos/ex11-transferir-tpft-entre-wd-e-cliente.ts): realiza a transferência de Título Público Federal Tokenizado entre contas de uma mesma instituição financeira;
 
