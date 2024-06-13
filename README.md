@@ -91,7 +91,7 @@ Foram criados os seguintes contratos inteligentes:
 
 Ainda, foram desenvolvidos os scripts de SETUP que cada PL deve executar quando do seu ingresso na VEN. Por fim, foram escritos e executados os casos de teste para os requisitos solicitados.  
 
-### Exemplos
+## Exemplos
 
 Os seguintes arquivos-fonte foram criados com o intuito de dar ao participante, um ponto de partida, um guia, sobre como interagir dos contratos inteligentes mencionados acima.
 
@@ -104,15 +104,29 @@ Antes de executar os scripts de exemplo, é imperativo que sejam preenchidas as 
 Para rodar cada um dos scripts abaixo é necessário rodar o comando [RUN] do [Hardhat](https://hardhat.org/). Exemplo abaixo;
 npx hardhat run [./exemplos/cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-adicionar-conta-allowlist.ts) --network [rayls]
 
-- [cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-adicionar-conta-allowlist.ts): autoriza uma conta a receber CDBC; 
+### CBDC no atacado:
 
-- [cbdc-remover-conta-allowlist.ts](./exemplos/cbdc-remover-conta-allowlist.ts): desautoriza uma conta a receber CDBC;
+- [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts): faz uma soliticação de emissão de novos CBDC para receber em uma conta.
 
-- [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts): faz uma soliticação de emissão de novos CBDC para receber em uma conta;
+  <strong>Pré-requisitos:</strong> 
+  
+  1. Antes de mais nada, os contratos da instituição precisam estar implantados no ambiente do participante com a execução do código [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts)
 
 - [ex2-transferir-cbdc-atacado.ts](./exemplos/ex2-transferir-cbdc-atacado.ts): a partir da instituição de origem, envia Real Digital para uma segunda instituição de destino (atacado);
+  
+  <strong>Pré-requisitos:</strong> 
+  
+  1. O endereço que deseja iniciar a transferência necessita de saldo, portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts);
 
-- [ex3-reversao-transferencia-cbdc-atacado.ts](./exemplos/ex3-reversao-transferencia-cbdc-atacado.ts): tenta realizar o envio de Real Digital para uma conta não autorizada, mas tem o envio revertido devido à não autorização;
+  2. O endereço de destino precisa estar autorizado, via allowlist, na PL da instituição de destino, a receber CDBC. Caso o endereço não tenha autorização, basta que os administradores da PL de destino tenham executado o código [opcional_add-conta-allowlist-cdbc.ts](./exemplos/opcional_add-conta-allowlist-cdbc.ts) para autorizar uma conta a receber CDBC na respectiva PL; 
+
+- [ex3-reversao-transferencia-cbdc-atacado.ts](./exemplos/ex3-reversao-transferencia-cbdc-atacado.ts): tenta realizar o envio de Real Digital para uma conta não autorizada, mas tem o envio revertido devido à não autorização - para que um endereço esteja autorizado a receber CDBC, o administrador da PL destinatária precisa ter adicionado, previamente, o respectivo endereço;
+
+  <strong>Pré-requisitos:</strong> 
+
+  1. O endereço que deseja iniciar a transferência necessita de saldo, portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts);
+
+  2. Caso o endereço de destino esteja autorizado a receber CDBCs, no caso deste exemplo,é necessário desautorizar o endereço de destino, através da execução do código [opcional_remove-conta-allowlist-cdbc.ts](./exemplos/opcional_remove-conta-allowlist-cdbc.ts): desautoriza uma conta a receber CDBC;
 
 - [ex4-transferir-realtokenizado-varejo.ts](./exemplos/ex4-transferir-realtokenizado-varejo.ts): a partir de um cliente em uma instituição de origem, envia Real Digital da reserva, bem como Real Tokenizado para uma segunda conta de cliente em uma instituição de destino (varejo);
 
@@ -137,6 +151,8 @@ npx hardhat run [./exemplos/cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-a
 - [ex14-dvp-cliente-resgate-vendedor.ts](./exemplos/ex14-dvp-cliente-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre clientes de instituições financeiras); 
 
 - [ex15-dvp-cliente-resgate-comprador.ts](./exemplos/ex15-dvp-cliente-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre clientes de instituições financeiras); 
+
+
 
 # <p align="center"> Diagramas de Sequência: Casos de uso Real Digital (DREX), Real Tokenizado e DVP (TPFt)
 </p>
