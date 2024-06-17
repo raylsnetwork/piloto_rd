@@ -13,7 +13,7 @@ async function example11() {
     
     const amountToTransfer = BigInt(100);
 
-    const tpftToMintData =  { 
+    const tpftToTransferData =  { 
         acronym: '<acrônimo do título público>', 
         code: '<código do título público>', 
         maturityDate: <data de validade do título público> 
