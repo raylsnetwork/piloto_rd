@@ -25,7 +25,7 @@ async function example12() {
     const tpftOperationAmount = BigInt(100);
     const tpftOperationPrice = BigInt(500);
 
-    const tpftToMintData =  { 
+    const tpftDvpData =  { 
         acronym: '<acrônimo do título público>', 
         code: '<código do título público>', 
         maturityDate: <data de validade do título público> 
