@@ -89,7 +89,7 @@ Foram criados os seguintes contratos inteligentes:
 
 - DVP.sol: contrato existente na PL da SELIC cujo objetivo é conciliar e servir como ponto de liquidação de operações de DVP.  
 
-Ainda, foram desenvolvidos os scripts de SETUP que cada PL deve executar quando do seu ingresso na VEN. Por fim, foram escritos e executados os casos de teste para os requisitos solicitados.  
+Ainda, foram desenvolvidos os scripts de setup que cada PL deve executar quando do seu ingresso na VEN. Por fim, foram escritos e executados os casos de teste para os requisitos solicitados.  
 
 ## Exemplos
 
@@ -101,8 +101,9 @@ Os códigos foram testados em sua funcionalidade, todavia, não foram realizadas
 
 Antes de executar os scripts de exemplo, é imperativo que sejam preenchidas as informações do arquivo [.env](.env.example). Em seguida, executar o script de setup, [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts). Por fim, os scripts de exemplo exigem que as informações necessárias para executar as transações sejam preenchidas. Tais informações estão delineadas entre parênteses angulares (por exemplo: `<informações a serem preenchidas>`).
 
-Para rodar cada um dos scripts abaixo é necessário rodar o comando [RUN] do [Hardhat](https://hardhat.org/). Exemplo abaixo;
-npx hardhat run [./exemplos/cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-adicionar-conta-allowlist.ts) --network [rayls]
+Para rodar cada o setup e cada um dos exemplos que se seguem abaixo é necessário rodar o comando `run` do [Hardhat](https://hardhat.org/), sempre apontando para a rede desejada. Exemplo abaixo:
+
+`npx hardhat run exemplos/ex1-requisitar-emissao-cbdc.ts --network rayls`
 
 ### CBDC (atacado):
 
@@ -120,7 +121,7 @@ npx hardhat run [./exemplos/cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-a
 
   2. No destino, o endereço destinatário precisa estar autorizado, via allowlist, na PL da instituição de destino, a receber CDBC. Caso o endereço não tenha autorização, basta que os administradores da PL de destino tenham executado o código [opcional_add-conta-allowlist-cdbc.ts](./exemplos/opcional_add-conta-allowlist-cdbc.ts) para autorizar uma conta a receber CDBC na respectiva PL.
 
-- [ex3-reversao-transferencia-cbdc-atacado.ts](./exemplos/ex3-reversao-transferencia-cbdc-atacado.ts): tenta realizar o envio de Real Digital para uma conta não autorizada, mas tem o envio revertido devido à não autorização - para que um endereço esteja autorizado a receber CDBC, o administrador da PL destinatária precisa ter adicionado, previamente, o respectivo endereço.
+- [ex3-reversao-transferencia-cbdc-atacado.ts](./exemplos/ex3-reversao-transferencia-cbdc-atacado.ts): tenta realizar o envio de Real Digital para uma conta não autorizada, mas tem o envio revertido devido à não autorização - ocorre que apenas endereços de contas autorizadas podem receber CDBC.
 
   <strong>Pré-requisitos:</strong> 
 
@@ -137,6 +138,8 @@ npx hardhat run [./exemplos/cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-a
   1. A conta de reservas da instituição da qual se deseja iniciar a transferência necessita de saldo de CBDC, portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts).
 
 ### Delivery versus Payment entre Instituições Financeiras:
+
+Os exemplos a seguir não precisam ser executados, necessariamente, seguindo a numeração destacada no nome dos arquivos. As numerações elencadas nos nomes dos arquivos são apenas um guia. Todavia, é importante observar os pré-requisitos pois, apesar de alguns scripts poderem se executados "fora de ordem", devemos notar que os scripts de registro de operações de DVP devem preceder a execução dos scripts de liquidação das respectivas operações. Em suma: tanto faz a ordem, ao executar os exemplos 5 e 6 - desde que sejam executados antes dos exemplos 9 e 10.
 
 - [ex5-dvp-if-registro-vendedor.ts](./exemplos/ex5-dvp-if-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras).
 
@@ -162,7 +165,7 @@ npx hardhat run [./exemplos/cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-a
 
   4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`).
 
-- [ex7-dvp-if-req-reversao-vendedor.ts](./exemplos/ex7-dvp-if-req-reversao-vendedor.ts): caso o vendedor precise, realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras);
+- [ex7-dvp-if-req-reversao-vendedor.ts](./exemplos/ex7-dvp-if-req-reversao-vendedor.ts): caso no qual o vendedor deseja realizar o cancelamento (solicitação de reversão) de uma operação de DVP com Título Público Federal Tokenizado já registrada;
 
   <strong>Pré-requisitos:</strong>
 
@@ -172,9 +175,11 @@ npx hardhat run [./exemplos/cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-a
 
   3. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
 
-  4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 1 p/ vendedor) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`).
+  4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 1 p/ vendedor) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`);
 
-- [ex8-dvp-if-req-reversao-comprador.ts](./exemplos/ex8-dvp-if-req-reversao-comprador.ts): caso o comprador precise, realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
+  5. O estado (`status`) da operação precisa refletir o fato de que o registro da respectiva operação foi feito apenas pela parte vendedora. Ocorre que, caso ambas as partes tenham feito seus registros, e tais registros tenham sido compatíveis, então não será possível solicitar o cancelamento da operação.
+
+- [ex8-dvp-if-req-reversao-comprador.ts](./exemplos/ex8-dvp-if-req-reversao-comprador.ts): caso no qual o comprador deseja realizar o cancelamento (solicitação de reversão) de uma operação de DVP com Título Público Federal Tokenizado já registrada;
 
   <strong>Pré-requisitos:</strong>
 
@@ -184,7 +189,9 @@ npx hardhat run [./exemplos/cbdc-adicionar-conta-allowlist.ts](./exemplos/cbdc-a
 
   3. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
 
-  4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`).
+  4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`);
+  
+  5. O estado (`status`) da operação precisa refletir o fato de que o registro da respectiva operação foi feito apenas pela parte compradora. Ocorre que, caso ambas as partes tenham feito seus registros, e tais registros tenham sido compatíveis, então não será possível solicitar o cancelamento da operação.
 
 - [ex9-dvp-if-resgate-comprador.ts](./exemplos/ex9-dvp-if-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
 
