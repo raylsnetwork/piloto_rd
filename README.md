@@ -267,6 +267,22 @@ Os exemplos a seguir não precisam ser executados, necessariamente, seguindo a n
     3. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas clientes de instituições (`isBetweenClients` = `true`).
 
 
+# <p align="center"> Diagramas de Estado
+</p>
+
+A ilustração esquemática a seguir demonstra como a execução de ações pelos participantes devem alterar os estados de uma operação de DPV, seja ela entre instituições ou entre clientes finais.
+
+<p align="center">
+  <a href="" rel="noopener">
+    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/DVP-diagrama-estados.png" alt="Project logo">
+  </a>
+  <p align="center">
+    <span>Diagrama de estados do DVP</span>
+  </p>
+</p>
+</br>
+</br>
+
 
 # <p align="center"> Diagramas de Sequência: Casos de uso Real Digital (DREX), Real Tokenizado e DVP (TPFt)
 </p>
