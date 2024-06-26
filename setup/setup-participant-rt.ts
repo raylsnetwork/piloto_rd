@@ -1,4 +1,7 @@
 import { ethers } from "hardhat";
+import IendpointContractABI from "../abi/IEndpoint.json";
+import RealTokenizadoABI from "../abi/RealTokenizado.json";
+
 
 async function main() {
     const rpcUrlIf = process.env.RPCURL ?? "";
@@ -13,31 +16,33 @@ async function main() {
     const MINTER_ROLE = ethers.id("MINTER_ROLE");
     const BURNER_ROLE = ethers.id("BURNER_ROLE");
 
-    const endpointIf = await ethers.getContractAt(
-        "IEndpoint", 
-        endpointAddrIf,
+    const endpointContract = await ethers.getContractAt(
+        IendpointContractABI, 
+        endpointAddrIf, 
         signerIf
     );
 
-    const cbdcAddr = await endpointIf.resourceIdToContractAddress(
+    const cbdcAddr = await endpointContract.resourceIdToContractAddress(
         resourceIdCBDC
     );
 
-    const realTokenizadoAddr = await endpointIf.resourceIdToContractAddress(
+    const realTokenizadoAddr = await endpointContract.resourceIdToContractAddress(
         resourceIdRT
     );
 
     const RTContract = await ethers.getContractAt(
-        "RealTokenizado", 
+        RealTokenizadoABI, 
         realTokenizadoAddr, 
         signerIf
     );
 
+    console.log("[DEBUG] Granting MINTER_ROLE & BURNER_ROLE to CBDC's address at RealTokenizado...");
     const txGrantMinter = await RTContract.grantRole(MINTER_ROLE, cbdcAddr);
     await txGrantMinter.wait();
 
     const txGrantBurner = await RTContract.grantRole(BURNER_ROLE, cbdcAddr);
     await txGrantBurner.wait();
+    console.log("[DEBUG] Done.");
 }
 
 main()
