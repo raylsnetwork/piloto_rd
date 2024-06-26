@@ -10,6 +10,10 @@ A Parfin, por meio de sua blockchain layer 0, a Rayls, permite a criação de am
 
 Dessa forma, torna-se possível o desenvolvimento de aplicações descentralizadas como DeFi, Tokenização, entre outras. Tudo com compatibilidade, interoperabilidade, composabilidade e robustez.
 
+<br/>
+<br/>
+<br/>
+
 # Estrutura da Rayls 
 
 A seguir, uma breve descrição da estrutura da Rayls.
@@ -40,60 +44,15 @@ A VEN existe em um contexto no qual diversas PLs podem se conectar, compondo um 
 
 Enquanto cada Instituição participará do ecossistema com sua respectiva PL, a Commit Chain é administrada pelo BACEN e instalada em seu ambiente. 
 
-### Infraestrutura topológica 
+Para maiores informações sobre a infraestrutura topológica da Rayls e da VEN, [clique aqui](./docs/arquitetura).
 
-O esquema ilustrativo, a seguir, demonstra como uma Privacy Ledger de propriedade de uma única instituição é composta, e como ela se relaciona com a Commit Chain: 
+<br/>
+<br/>
+<br/>
 
-<p align="center">
-    <a href="" rel="noopener">
-        <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/Raylz-e-Commit-Chain+(1).png" alt="Rayls">
-    </a>
-    <p align="center">
-        <span>Estrutura de uma Privacy Ledger e sua relação com a Commit Chain</span>
-    </p>
-</p>
+# <p align="center"> Exemplos </p>
 
-Como podemos observar, na ilustração acima, os contratos inteligentes podem existir tanto na Privacy Ledger quanto na Commit Chain, sendo elas blockchains distintas e funcionais. A comunicação entre PL e Commit Chain se dará através da figura do Relayer, que é um serviço que realiza escuta ativa de eventos que ocorrem na respectiva PL e propaga tais eventos à(s) blockchain(s) interessada(s), de forma criptografada e, privada. Ou seja, toda e qualquer mensagem que trafega pela VEN através da Commit Chain será confidencial e poderá ser acessível apenas pelas partes autorizadas (terceiros participantes da rede não terão acesso às respectivas trocas de mensagem). 
-
-Em suma, pode-se dizer que a arquitetura da VEN foi construída de forma a garantir que: 
-
-- Tudo o que ocorre dentro de uma PL é privado, e somente os administradores da respectiva PL poderão autorizar acesso a ela; 
-
-- Os contratos inteligentes e protocolos podem ser executados tanto nas PLs quanto na Commit Chain, a depender dos papéis de cada ator na VEN; 
-
-- A comunicação entre PLs se dará por intermédio da Commit Chain, protegida por criptografia de ponta a ponta; 
-
-# Casos de Teste e Contratos Inteligentes 
-
-Os contratos inteligentes desenvolvidos implementam o Real Digital (DREX) como um token ERC20 e o Título Público Federal Tokenizado (TPFt) como um token ERC1155, ambos registrados via Commit Chain e com capacidades de envio e recebimento de mensagens cross-chain dentro da VEN. Ainda, o token Real Tokenizado também foi implementado seguindo o padrão ERC20, todavia, sem a necessidade de ser registrado via Commit Chain, existindo somente nas PLs de cada um dos participantes.  
-
-O caso de testes requestToMint foi implementado de forma que a PL do BACEN seja responsável por autorizar tais ações de emissão de novos DREX.  
-
-Já o caso de teste STR0004 (Transferência de Real Digital entre Participantes) focou em demonstrar como transações de DREX entre diferentes IFs podem ser feitos de forma atômica e garantindo confidencialidade entre as s IFs.  
-
-O caso de teste STR0008 (equivalente ao Swap One Step) focou em demonstrar como é possível que clientes de diferentes IFs participantes podem transacionar entre si.  
-
-Já os casos de testes com TPFt e DVP foram feitos de forma a permitir que a emissão de Títulos Públicos e posterior comercialização de tais títulos, tanto entre instituições apenas, quanto entre clientes de instituições.  
-
-Foram criados os seguintes contratos inteligentes:  
-
-- CDBC.sol: contrato que representa o Real Digital;  
-
-- TPFt.sol: contrato que representa o Título Público Federal Tokenizado;  
-
-- RealTokenizado: contrato que representa reais tokenizados existentes dentro de uma IF;  
-
-- STR.sol: contrato utilizado para que o BACEN receba e processe mensagens para emissão de novos DREX;  
-
-- TPFToperation.sol: contrato utilizado por participantes para registrarem, liquidarem e/ou reverterem operações de DVP;  
-
-- DVP.sol: contrato existente na PL da SELIC cujo objetivo é conciliar e servir como ponto de liquidação de operações de DVP.  
-
-Ainda, foram desenvolvidos os scripts de setup que cada PL deve executar quando do seu ingresso na VEN. Por fim, foram escritos e executados os casos de teste para os requisitos solicitados.  
-
-## Exemplos
-
-Os seguintes arquivos-fonte foram criados com o intuito de dar ao participante, um ponto de partida, um guia, sobre como interagir dos contratos inteligentes mencionados acima.
+Os seguintes arquivos-fonte foram criados com o intuito de dar ao participante, um ponto de partida, um guia, sobre como interagir dos contratos inteligentes mencionados acima. Para mais informações sobre os contratos que foram desenvolvidos, [clique aqui](./docs/casos-uso-drex.md).
 
 Os exemplos foram escritos em Typescript, utilizando o framework [Hardhat](https://hardhat.org/). Isso não é uma recomendação do uso da ferramenta por parte da Parfin. Os participantes são livres para desenvolverem a interação com os contratos inteligente da forma que bem entenderem.
 
@@ -105,295 +64,72 @@ Para rodar cada o setup e cada um dos exemplos que se seguem abaixo é necessár
 
 `npx hardhat run exemplos/ex1-requisitar-emissao-cbdc.ts --network rayls`
 
-### CBDC (atacado):
+<br/>
 
-- [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts): faz uma soliticação de emissão de novos CBDC para receber em uma conta.
+### CDBC (atacado)
 
-  <strong>Pré-requisitos:</strong> 
-  
-  1. Antes de mais nada, os contratos da instituição precisam estar implantados no ambiente do participante com a execução do código [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts).
+Os exemplos desta seção correspondem às ações que podem ser realizadas e que envolvem exclusivamente o contrato `CBDC`.
 
-- [ex2-transferir-cbdc-atacado.ts](./exemplos/ex2-transferir-cbdc-atacado.ts): a partir da instituição de origem, envia Real Digital para uma segunda instituição de destino (atacado).
-  
-  <strong>Pré-requisitos:</strong> 
-  
-  1. Na origem, o endereço que deseja iniciar a transferência necessita de saldo, portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts);
+- [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts): faz uma soliticação de emissão de novos CBDC para receber em uma conta;
 
-  2. No destino, o endereço destinatário precisa estar autorizado, via allowlist, na PL da instituição de destino, a receber CDBC. Caso o endereço não tenha autorização, basta que os administradores da PL de destino tenham executado o código [opcional_add-conta-allowlist-cdbc.ts](./exemplos/opcional_add-conta-allowlist-cdbc.ts) para autorizar uma conta a receber CDBC na respectiva PL.
+- [ex2-transferir-cbdc-atacado.ts](./exemplos/ex2-transferir-cbdc-atacado.ts): a partir da instituição de origem, envia Real Digital para uma segunda instituição de destino (atacado);
 
-- [ex3-reversao-transferencia-cbdc-atacado.ts](./exemplos/ex3-reversao-transferencia-cbdc-atacado.ts): tenta realizar o envio de Real Digital para uma conta não autorizada, mas tem o envio revertido devido à não autorização - ocorre que apenas endereços de contas autorizadas podem receber CDBC.
+- [ex3-reversao-transferencia-cbdc-atacado.ts](./exemplos/ex3-reversao-transferencia-cbdc-atacado.ts): tenta realizar o envio de Real Digital para uma conta não autorizada, mas tem o envio revertido devido à não autorização;
 
-  <strong>Pré-requisitos:</strong> 
+- [opcional_add-conta-allowlist-cdbc](./exemplos/opcional_add-conta-allowlist-cdbc.ts): autoriza uma conta a receber CDBC; 
 
-  1. Na origem, o endereço que deseja iniciar a transferência necessita de saldo, portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts);
+- [opcional_remove-conta-allowlist-cdbc](./exemplos/opcional_remove-conta-allowlist-cdbc.ts): desautoriza uma conta a receber CDBC;
 
-  2. Caso o endereço de destino esteja autorizado a receber CDBCs, no caso deste exemplo, é necessário desautorizar o endereço de destino, através da execução do código [opcional_remove-conta-allowlist-cdbc.ts](./exemplos/opcional_remove-conta-allowlist-cdbc.ts): desautoriza uma conta a receber CDBC.
+Caso queira maiores detalhes sobre os pré-requisitos necessários para executar cada script, [clique aqui](./docs/atacado-cbdc.md).
 
-### Real Tokenizado (varejo):
+<br/>
 
-- [ex4-transferir-realtokenizado-varejo.ts](./exemplos/ex4-transferir-realtokenizado-varejo.ts): a partir de um cliente em uma instituição de origem, envia Real Digital da reserva, bem como Real Tokenizado para uma segunda conta de cliente em uma instituição de destino (varejo).
+### Real Tokenizado (atacado)
 
-  <strong>Pré-requisitos:</strong>
+O exemplo desta seção corresponde às ações que podem ser realizadas e que envolvem o contrato `RealTokenizado`.
 
-  1. A conta de reservas da instituição da qual se deseja iniciar a transferência necessita de saldo de CBDC, portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts);
+- [ex4-transferir-realtokenizado-varejo.ts](./exemplos/ex4-transferir-realtokenizado-varejo.ts): a partir de um cliente em uma instituição de origem, envia Real Digital da reserva, bem como Real Tokenizado para uma segunda conta de cliente em uma instituição de destino (varejo);
 
-  2. O endereço do contrato CBDC precisa estar autorizado a emitir e queimar tokens do contrato RealTokenizado. Dito isso, antes de executar este exemplo, deve-se executar o script de garantia de controle de acesso ao RealTokenizado: [setup-participant-rt.ts](./setup/setup-participant-rt.ts).
+Caso queira maiores detalhes sobre os pré-requisitos necessários para executar cada script, [clique aqui](./docs/varejo-real-tokenizado.md).
 
-### Delivery versus Payment entre Instituições Financeiras:
+<br/>
 
-Os exemplos a seguir não precisam ser executados, necessariamente, seguindo a numeração destacada no nome dos arquivos. As numerações elencadas nos nomes dos arquivos são apenas um guia. Todavia, é importante observar os pré-requisitos pois, apesar de alguns scripts poderem se executados "fora de ordem", devemos notar que os scripts de registro de operações de DVP devem preceder a execução dos scripts de liquidação das respectivas operações. Em suma: tanto faz a ordem, ao executar os exemplos 5 e 6 - desde que sejam executados antes dos exemplos 9 e 10.
+### Delivery versus Payment (DVP) entre Instituições Financeiras (IF)
 
-- [ex5-dvp-if-registro-vendedor.ts](./exemplos/ex5-dvp-if-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras).
+O exemplo desta seção corresponde a algumas ações que podem ser realizadas e que envolvem o contrato `TPFToperation`.
 
-  <strong>Pré-requisitos:</strong>
+- [ex5-dvp-if-registro-vendedor.ts](./exemplos/ex5-dvp-if-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras);
 
-  1. Antes de mais nada, os contratos da instituição precisam estar implantados no ambiente do participante com a execução do código [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts);
+- [ex6-dvp-if-registro-comprador.ts](./exemplos/ex6-dvp-if-registro-comprador.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
 
-  2. O endereço da conta que deseja realizar a venda necessita de saldo de TPFt. Para tanto é preciso que uma solicitação off-chain seja feita à SELIC para que, então, a SELIC envie os TPFt solicitados à respectiva conta do vendedor
+- [ex7-dvp-if-req-reversao-vendedor.ts](./exemplos/ex7-dvp-if-req-reversao-vendedor.ts): realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras);
 
-  3. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
+- [ex8-dvp-if-req-reversao-comprador.ts](./exemplos/ex8-dvp-if-req-reversao-comprador.ts): realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
 
-  4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 1 p/ vendedor) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`).
-
-- [ex6-dvp-if-registro-comprador.ts](./exemplos/ex6-dvp-if-registro-comprador.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras).
-
-  <strong>Pré-requisitos:</strong>
-
-  1. Antes de mais nada, os contratos da instituição precisam estar implantados no ambiente do participante com a execução do código [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts);
-
-  2. O endereço da conta que deseja realizar a compra precisa de saldo de CBDC. Portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts).
-
-  3. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
-
-  4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`).
-
-- [ex7-dvp-if-req-reversao-vendedor.ts](./exemplos/ex7-dvp-if-req-reversao-vendedor.ts): caso no qual o vendedor deseja realizar o cancelamento (solicitação de reversão) de uma operação de DVP com Título Público Federal Tokenizado já registrada;
-
-  <strong>Pré-requisitos:</strong>
-
-  1. Ter executado o código [ex5-dvp-if-registro-vendedor.ts](./exemplos/ex5-dvp-if-registro-vendedor.ts);
-
-  2. O endereço da conta que deseja registrar e posteriormente solicitar reversão da operação de venda necessita de saldo de TPFt. Para tanto é preciso que uma solicitação off-chain seja feita à SELIC para que, então, a SELIC envie os TPFt solicitados à respectiva conta do vendedor
-
-  3. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
-
-  4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 1 p/ vendedor) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`);
-
-  5. O estado (`status`) da operação precisa refletir o fato de que o registro da respectiva operação foi feito apenas pela parte vendedora. Ocorre que, caso ambas as partes tenham feito seus registros, e tais registros tenham sido compatíveis, então não será possível solicitar o cancelamento da operação.
-
-- [ex8-dvp-if-req-reversao-comprador.ts](./exemplos/ex8-dvp-if-req-reversao-comprador.ts): caso no qual o comprador deseja realizar o cancelamento (solicitação de reversão) de uma operação de DVP com Título Público Federal Tokenizado já registrada;
-
-  <strong>Pré-requisitos:</strong>
-
-  1. Ter executado o código [ex6-dvp-if-registro-comprador.ts](./exemplos/ex6-dvp-if-registro-comprador.ts);
-
-  2. O endereço da conta que deseja registrar e posteriormente solicitar reversão da operação de compra precisa de saldo de CBDC. Portanto, é interessante que o respectivo endereço tenha recebido saldo, por exemplo, através da execução do script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts).
-
-  3. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
-
-  4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`);
-  
-  5. O estado (`status`) da operação precisa refletir o fato de que o registro da respectiva operação foi feito apenas pela parte compradora. Ocorre que, caso ambas as partes tenham feito seus registros, e tais registros tenham sido compatíveis, então não será possível solicitar o cancelamento da operação.
-
-- [ex9-dvp-if-resgate-comprador.ts](./exemplos/ex9-dvp-if-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
-
-  <strong>Pré-requisitos:</strong>
-
-  1. É necessário ter executado o código [ex6-dvp-if-registro-comprador.ts](./exemplos/ex6-dvp-if-registro-comprador.ts) previamente;
-
-  2. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
-
-  3. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 1 p/ vendedor, 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`).
+- [ex9-dvp-if-resgate-comprador.ts](./exemplos/ex9-dvp-if-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras); 
 
 - [ex10-dvp-if-resgate-vendedor.ts](./exemplos/ex10-dvp-if-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras); 
 
-  <strong>Pré-requisitos:</strong>
+Caso queira maiores detalhes sobre os pré-requisitos necessários para executar cada script, [clique aqui](./docs/dvp-entre-ifs.md).
 
-  1. É necessário ter executado o código [ex5-dvp-if-registro-vendedor.ts](./exemplos/ex5-dvp-if-registro-vendedor.ts) previamente;
+<br/>
 
-  2. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
+### Delivery versus Payment (DVP) entre Clientes
 
-  3. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 1 p/ vendedor, 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`).
-
-### Delivery versus Payment entre Clientes de Instituições Financeiras:
+O exemplo desta seção corresponde a ainda mais ações que podem ser realizadas e que envolvem o contrato `TPFToperation`.
 
 - [ex11-transferir-tpft-entre-wd-e-cliente.ts](./exemplos/ex11-transferir-tpft-entre-wd-e-cliente.ts): realiza a transferência de Título Público Federal Tokenizado entre contas de uma mesma instituição financeira;
 
-  <strong>Pré-requisitos:</strong>
-
-  1. O endereço da conta que deseja realizar a venda necessita de saldo de TPFt. Para tanto é preciso que uma solicitação off-chain seja feita à SELIC para que, então, a SELIC envie os TPFt solicitados à respectiva conta do vendedor
-
-- [ex12-dvp-cliente-registro-vendedor.ts](./exemplos/ex12-dvp-cliente-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre clientes de instituições financeiras);
-
-    <strong>Pré-requisitos:</strong>
-
-    1. Antes de mais nada, os contratos da instituição precisam estar implantados no ambiente do participante com a execução do código [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts);
-
-    2. O endereço do cliente que deseja registrar a operação de venda deve possuir saldo de TPFt. Para tanto, é preciso que o script [ex11-transferir-tpft-entre-wd-e-cliente.ts](./exemplos/ex11-transferir-tpft-entre-wd-e-cliente.ts) tenha sido executado previamente;
-
-    3. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
-
-    4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 1 p/ vendedor) da operação e; a informação de confirmação de que a operação será realizada entre duas clientes de instituições (`isBetweenClients` = `true`).
+- [ex12-dvp-cliente-registro-vendedor.ts](./exemplos/ex12-dvp-cliente-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre clientes de instituições financeiras); 
 
 - [ex13-dvp-cliente-registro-comprador.ts](./exemplos/ex13-dvp-cliente-registro-comprador.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre clientes de instituições financeiras); 
 
-    <strong>Pré-requisitos:</strong>
-
-    1. Antes de mais nada, os contratos da instituição precisam estar implantados no ambiente do participante com a execução do código [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts);
-
-    2. O endereço da de reservas da instituição de onde está partindo o registro de compra necessita de saldo de CBDC. Para tanto é preciso ter executado o script [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts) previamente. Também é necessário que a conta do cliente comprador possua saldo de Real Tokenizado;
-
-    3. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
-
-    4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas clientes de instituições (`isBetweenClients` = `true`).
-
 - [ex14-dvp-cliente-resgate-vendedor.ts](./exemplos/ex14-dvp-cliente-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre clientes de instituições financeiras); 
-
-  <strong>Pré-requisitos:</strong>
-
-  1. Para que o cliente receba seu pagamento via RealTokenizado, o endereço do contrato CBDC precisa estar autorizado a emitir e queimar tokens do contrato RealTokenizado. Dito isso, antes de executar este exemplo, é preciso ter executado o script [setup-participant-rt.ts](./setup/setup-participant-rt.ts);
-
-  2. É necessário ter executado o código [ex12-dvp-cliente-registro-vendedor.ts](./exemplos/ex12-dvp-cliente-registro-vendedor.ts) previamente;
-
-  3. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
-
-  4. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 1 p/ vendedor) da operação e; a informação de confirmação de que a operação será realizada entre duas clientes de instituições (`isBetweenClients` = `true`).
-
 
 - [ex15-dvp-cliente-resgate-comprador.ts](./exemplos/ex15-dvp-cliente-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre clientes de instituições financeiras); 
 
-    <strong>Pré-requisitos:</strong>
+Caso queira maiores detalhes sobre os pré-requisitos necessários para executar cada script, [clique aqui](./docs/dvp-entre-clientes.md).
 
-    1. É necessário ter executado o código [ex13-dvp-cliente-registro-comprador.ts](./exemplos/ex13-dvp-cliente-registro-comprador.ts): previamente;
-
-    2. É necessário conhecer os metadados do TPFt (`TPFtData`), a saber: `acronym`, do tipo `string`; `code`, do tipo `string` e; `maturityDate` do tipo `uint256`;
-
-    3. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas clientes de instituições (`isBetweenClients` = `true`).
-
-
-# <p align="center"> Diagramas de Estado
-</p>
-
-A ilustração esquemática a seguir demonstra como a execução de ações pelos participantes devem alterar os estados de uma operação de DPV, seja ela entre instituições ou entre clientes finais.
-
-<p align="center">
-  <a href="" rel="noopener">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/DVP-diagrama-estados.png" alt="Project logo">
-  </a>
-  <p align="center">
-    <span>Diagrama de estados do DVP</span>
-  </p>
-</p>
-</br>
-</br>
-
-
-# <p align="center"> Diagramas de Sequência: Casos de uso Real Digital (DREX), Real Tokenizado e DVP (TPFt)
-</p>
-
-A seguir, seguem ilustrações que esquematizam a sequência de trocas de mensagens entre objetos, seja dentro de uma mesma PL, seja entre PLs distintas.
-
-### Emissão de novos DREX
-
-<p align="center">
-  <a href="" rel="noopener">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/1-requestToMint.drawio.png" alt="Project logo">
-  </a>
-  <p align="center">
-    <span>Requisição para emissão de novos Reais Digitais (CDBC)</span>
-  </p>
-</p>
-</br>
-</br>
-
-### Transferência de DREX entre IFs
-
-<p align="center">
-  <a href="" rel="noopener">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/2-CBDC-Allowlist.drawio.png" alt="Project logo">
-  </a>
-  <p align="center">
-    <span>Fluxos de adição, remoção e checagem para uma conta receber, ou não, Real Dgital (CDBC)</span>
-  </p>
-</p>
-</br>
-</br>
-
-<p align="center">
-  <a href="" rel="noopener">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/3-STR0004.drawio.png" alt="Project logo">
-  </a>
-  <p align="center">
-    <span>Envio de Real Digital entre instituições financeiras (atacado)</span>
-  </p>
-</p>
-</br>
-</br>
-
-<p align="center">
-  <a href="" rel="noopener">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/4-STR0004-Revers%C3%A3o-At%C3%B4mica.drawio.png" alt="Project logo">
-  </a>
-  <p align="center">
-    <span>Reversão de envio de Real Digital devido a permissionamento inválido</span>
-  </p>
-</p>
-</br>
-</br>
-
-### Transferência de Real Tokenizado entre Clientes de IFs
-
-<p align="center">
-  <a href="" rel="noopener">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/5-STR0008.drawio.png" alt="Project logo">
-  </a>
-  <p align="center">
-    <span>Envio de Real Tokenizado entre clientes de instituições financeiras (varejo)</span>
-  </p>
-</p>
-</br>
-</br>
-
-### DVP: Negociações de Título Público Federal Tokenizado (TPFt)
-
-<p align="center">
-  <a href="" rel="noopener">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/6-Mint-de-TPFt.drawio.png" alt="Project logo">
-  </a>
-  <p align="center">
-    <span>Emissão de Títulos Públicos Federais Tokenizados</span>
-  </p>
-</p>
-</br>
-</br>
-
-<p align="center">
-  <a href="" rel="noopener">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/7-DVP-entre-IFs.drawio.png" alt="Project logo">
-  </a>
-  <p align="center">
-    <span>DVP entre instituições financeiras</span>
-  </p>
-</p>
-</br>
-</br>
-
-<p align="center">
-  <a href="" rel="noopener">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/8-DVP-com-Revers%C3%A3o.drawio.png" alt="Project logo">
-  </a>
-    <p align="center">
-    <span>Cancelamento de DVP entre instituições financeiras</span>
-  </p>
-</p>
-</br>
-</br>
-
-<p align="center">
-  <a href="" rel="noopener">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/9-DVP-entre-Clientes.drawio.png" alt="Project logo">
-  </a>
-    <p align="center">
-    <span>DVP entre clientes de instituições financeiras</span>
-  </p>
-</p>
+<br/>
+<br/>
+<br/>
