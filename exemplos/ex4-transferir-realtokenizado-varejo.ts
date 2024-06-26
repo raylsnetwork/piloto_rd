@@ -18,42 +18,41 @@ interface TypedEventLog extends Log {
 async function example4() {
     const { 
         endpointContractAddr,
-        clientSigner,
         cbdcResourceId,
         wdResourceId,
         rtResourceId
     } = await getPLInformation();
 
-    const [deployerSigner] = await ethers.getSigners();
+    const [deployerSigner, clientSigner] = await ethers.getSigners();
 
     const chainIdDestination = process.env.DEST_CHAINID ?? 0;
     const destClientAcc = process.env.DEST_CLIENT_ACC ?? 0;
 
     const amountToMintAndSwap = ethers.parseUnits("10", 2);
 
-    const endpointA = await ethers.getContractAt(
+    const endpointContract = await ethers.getContractAt(
         IendpointContractABI, 
         endpointContractAddr, 
         deployerSigner
     );
 
-    const walletDefault = await endpointA.resourceIdToContractAddress(
+    const walletDefault = await endpointContract.resourceIdToContractAddress(
         wdResourceId
     );
-    const realTokenizadoAddressIFA = await endpointA.resourceIdToContractAddress(
+    const realTokenizadoAddr = await endpointContract.resourceIdToContractAddress(
         rtResourceId
     );
-    const cbdcContractAddr = await endpointA.resourceIdToContractAddress(
+    const cbdcContractAddr = await endpointContract.resourceIdToContractAddress(
         cbdcResourceId
     );
 
-    const realtokenizadoA = await ethers.getContractAt(
+    const realTokenizadoContract = await ethers.getContractAt(
         RealTokenizadoABI, 
-        realTokenizadoAddressIFA, 
+        realTokenizadoAddr, 
         deployerSigner
     );
     console.log("[DEBUG] Minting Real Tokenizado for the client at origin...");
-    const txMint = await realtokenizadoA.mint(clientSigner.address, amountToMintAndSwap);
+    const txMint = await realTokenizadoContract.mint(clientSigner.address, amountToMintAndSwap);
     await txMint.wait();
 
     const cbdcContract = await ethers.getContractAt(
@@ -63,7 +62,7 @@ async function example4() {
     ); 
 
     const balancRTBefore = await getBalanceRTSync(
-        endpointA, 
+        endpointContract, 
         rtResourceId, 
         clientSigner, 
         clientSigner.address
@@ -71,12 +70,21 @@ async function example4() {
     console.log("[DEBUG] balancRTBefore:", balancRTBefore);
 
     const balanceCDBCBefore = await getBalanceCBDCSync(
-        endpointA, 
+        endpointContract, 
         cbdcResourceId, 
         deployerSigner, 
         walletDefault
     ) ?? BigInt(0);
     console.log("[DEBUG] balanceCDBCBefore:", balanceCDBCBefore);
+
+    console.log("[DEBUG] Approving RealTokenizado amount for CBDC contract address...");
+    const txApproveRT = await realTokenizadoContract
+        .connect(clientSigner)
+        .approve(
+            cbdcContractAddr, 
+            amountToMintAndSwap
+        );
+    await txApproveRT.wait();
 
     console.log(`[DEBUG] swap ...`);
     const txSwap = await cbdcContract.swap(
@@ -116,7 +124,7 @@ async function example4() {
     console.log("[DEBUG] swapAcknowledged:", swapAcknowledged);
 
     const balancRTAfter = await getBalanceRTSync(
-        endpointA, 
+        endpointContract, 
         rtResourceId, 
         clientSigner, 
         clientSigner.address
@@ -124,7 +132,7 @@ async function example4() {
     console.log("[DEBUG] balancRTAfter:", balancRTAfter);
 
     const balanceCDBCAfter = await getBalanceCBDCSync(
-        endpointA, 
+        endpointContract, 
         cbdcResourceId, 
         deployerSigner, 
         walletDefault

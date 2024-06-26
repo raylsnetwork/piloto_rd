@@ -5,7 +5,9 @@ import {
     getPLInformation, 
     TimeoutExecution 
 } from "../utils/utils";
+import cbdcContractABI from "../abi/CBDC.json";
 import IendpointContractABI from "../abi/IEndpoint.json";
+import RealTokenizadoABI from "../abi/RealTokenizado.json";
 import tpftOpContractABI from "../abi/TPFToperation.json";
 
 async function example13() {
@@ -16,7 +18,6 @@ async function example13() {
         rtResourceId,
         tpftOpResourceId
     } = await getPLInformation();
-
 
     const [deployerSigner, clientSigner] = await ethers.getSigners();
 
@@ -54,9 +55,9 @@ async function example13() {
     );
 
     const tpftOpAddress = await endpointContract
-    .resourceIdToContractAddress(
-        tpftOpResourceId
-    );
+        .resourceIdToContractAddress(
+            tpftOpResourceId
+        );
 
     const tpftOpContract = await ethers.getContractAt(
         tpftOpContractABI, 
@@ -83,7 +84,46 @@ async function example13() {
         clientSigner.address
     );
     console.log("[DEBUG] balanceRTBefore", balanceRTBefore);
-    
+
+    const realTokenizadoAddr = await endpointContract.resourceIdToContractAddress(
+        rtResourceId
+    );
+
+    const realTokenizadoContract = await ethers.getContractAt(
+        RealTokenizadoABI, 
+        realTokenizadoAddr, 
+        clientSigner
+    );
+
+    const approvalAmount = (opData.tpftAmount * opData.price) / BigInt(10) ** BigInt(2);
+
+    console.log("[DEBUG] Approving RealTokenizado amount for TPFToperation contract address...");
+    const txApproveRT = await realTokenizadoContract
+        .approve(
+            tpftOpAddress, 
+            approvalAmount
+        );
+    await txApproveRT.wait();
+
+    const cbdcContractAddr = await endpointContract
+        .resourceIdToContractAddress(
+            cbdcResourceId
+        );
+
+    const cbdcContract = await ethers.getContractAt(
+        cbdcContractABI, 
+        cbdcContractAddr, 
+        deployerSigner
+    );
+
+    console.log("[DEBUG] Approving CBDC amount for TPFToperation contract address...");
+    const txApproveCbdc = await cbdcContract
+        .approve(
+            tpftOpAddress, 
+            approvalAmount
+        );
+    await txApproveCbdc.wait();
+
     console.log("[DEBUG] Registering operation as buyer...");
     const txOpReg = await tpftOpContract.callRegisterOperation(opData);
     await txOpReg.wait();

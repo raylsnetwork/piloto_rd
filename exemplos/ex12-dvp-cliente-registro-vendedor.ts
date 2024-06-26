@@ -5,6 +5,7 @@ import {
     TimeoutExecution 
 } from "../utils/utils";
 import IendpointContractABI from "../abi/IEndpoint.json";
+import TpftContractABI from "../abi/TPFt.json";
 import tpftOpContractABI from "../abi/TPFToperation.json";
 
 async function example12() {
@@ -73,6 +74,24 @@ async function example12() {
         opData.tpftData
     );
     console.log("[DEBUG] balanceBefore:", balanceBefore);
+
+    const tpftContractAddr = await endpointContract
+    .resourceIdToContractAddress(
+        tpftResourceId
+    );
+
+    const tpftContract = await ethers.getContractAt(
+        TpftContractABI, 
+        tpftContractAddr, 
+        clientSigner
+    );
+
+    console.log("[DEBUG] Approving TPFt amount for TPFToperation contract address...");
+    const txApprove = await tpftContract.setApprovalForAll(
+        tpftOpAddress, 
+        true
+    );
+    txApprove.wait();
     
     console.log("[DEBUG] Registering operation as seller...");
     let txOpReg = await tpftOpContract.callRegisterOperation(opData);

@@ -4,6 +4,7 @@ import {
     getPLInformation, 
     TimeoutExecution 
 } from "../utils/utils";
+import cbdcContractABI from "../abi/CBDC.json";
 import IendpointContractABI from "../abi/IEndpoint.json";
 import tpftOpContractABI from "../abi/TPFToperation.json";
 
@@ -70,6 +71,27 @@ async function example6() {
         deployerSigner.address
     );
     console.log("[DEBUG] balanceBefore", balanceBefore);
+
+    const cbdcContractAddr = await endpointContract
+        .resourceIdToContractAddress(
+            cbdcResourceId
+        );
+
+    const cbdcContract = await ethers.getContractAt(
+        cbdcContractABI, 
+        cbdcContractAddr, 
+        deployerSigner
+    );
+    
+    const approvalAmount = (opData.tpftAmount * opData.price) / BigInt(10) ** BigInt(2);
+
+    console.log("[DEBUG] Approving CBDC amount for TPFToperation contract address...");
+    const txApproveCbdc = await cbdcContract
+        .approve(
+            tpftOpAddress, 
+            approvalAmount
+        );
+    await txApproveCbdc.wait();
     
     console.log("[DEBUG] Registering operation as buyer...");
     const txOpReg = await tpftOpContract.callRegisterOperation(opData);
