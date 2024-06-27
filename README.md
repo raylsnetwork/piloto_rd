@@ -155,10 +155,13 @@ Caso queira maiores detalhes sobre os pré-requisitos necessários para executar
     - `tpftAmount`: quantidade de TPFt - dado do tipo `inteiro`;
     - `price`: preço unitário por TPFt - dado do tipo `inteiro`;
     - `status`: estado inicial da operação, para vendedor, é sempre igual a 1, já para comprador, sempre igual a 2, independentemente do estado anterior da operação - dado do tipo `inteiro`;
-    - `isBetweenClients`: falso (`false`) para operação entre instituições financeiras, verdadeiro (`true`) para operação entre clientes finais de instituições financeiras - dado do tipo `booleano`;
+    - `isBetweenClients`: falso (`false`) para operação entre instituições financeiras, verdadeiro (`true`) para operação entre clientes finais de instituições financeiras - dado do tipo `booleano`.
 
 4. Estou tentando executar um exemplo, mas a transação da erro quando eu executo. O que fazer?
-    - Caso alguma de suas transações reverta, uma das opções utilizar o `data` da transação para tentar decodar com base nas ABIs disponíveis no projeto. A partir disso, você será capaz de conhecer melhor a mensagem de erro que justifica a reversão da respectiva transação e, com isso, poderá tentar readaptar o seu código para que flua como desejado;
+    - Caso alguma de suas transações reverta, uma das opções utilizar o `data` da transação para tentar decodar com base nas ABIs disponíveis no projeto. A partir disso, você será capaz de conhecer melhor a mensagem de erro que justifica a reversão da respectiva transação e, com isso, poderá tentar readaptar o seu código para que flua como desejado.
 
 5. Meu exemplo começa a executar, porém a contagem que aparece na tela excede 120 segundos e então meu exemplo parece não apresentar um resultado coerente. O que fazer?
-    - Isso ocorre quando alguma de suas transações cross-chain falhou. Pode ser que alguma de suas informações do arquivo .env estejam erradas. Verifique e valide cada um dos valores associados às suas variáveis de ambiente. Caso o problema persista, vale a pena investigar nos logs do seu container da Privacy Ledger ou mesmo do Relayer, para tentar identificar se existe alguma mensagem de erro ou de reversão que possa estar associado à sua ação.
+    - Isso ocorre quando alguma de suas transações cross-chain falhou. Pode ser que alguma de suas informações do arquivo .env estejam erradas. Verifique e valide cada um dos valores associados às suas variáveis de ambiente. Caso o problema persista, investigue nos logs dos seus componentes:
+      - Relayer - Procure por uma mensagem de erro ou reversão associada a operação realizada. Essa mensagem ajudará a identificar o motivo da sua reversão;
+      - Privacy ledger - Procure por mensagem de erro associado a execução das transações.
+
