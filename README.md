@@ -133,3 +133,32 @@ Caso queira maiores detalhes sobre os pré-requisitos necessários para executar
 <br/>
 <br/>
 <br/>
+
+# Perguntas Frequentes (FAQ):
+
+1. Qual a utilidade da variável de ambiente ENDPOINT_ADDR? Onde posso encontrar essa informação?
+    - É o endereço do contrato Endpoint que, por sua vez, faz parte do protocolo de comunicação cross-chain da Rayls. Esse endereço é informado no output do console do Relayer, um dos componentes do ambiente de infraestrutura necessária para ter uma Rayls em plena execução. Para maiores informações sobre o setup do Relayer, [clique aqui](https://github.com/raylsnetwork/piloto_rd_setup/blob/main/kubernetes/README.md#rayls-relayer).
+
+2. Como posso consultar meus saldos de Real Tokenizado, DREX ou TPFt?
+    - Para consultar seu saldo, é preciso invocar a função `balanceOf` a partir de algum dos respectivos contratos. O endereço dos contratos podem ser descobertos a partir de seu resourceId. Veja os exemplos 1, 3 e 5, para ter modelos de como consultar saldo - com base nesses exemplos, você poderia criar um script próprio, customizando sua checagem de saldos.
+
+3. Como devo preencher as informações necessárias para realizar uma operação de DVP?
+    - `operationId`: identificador único da operação, informação que deve ser acordada previamente de antemão entre as partes envolvidas no DVP - dado do tipo `string`;
+    - `chainIdSeller`: Chain ID da PL do participante vendedor - dado do tipo `inteiro`;
+    - `chainIdBuyer`: Chain ID da PL do participante comprador - dado do tipo `inteiro`;
+    - `accountSeller`: conta da PL do participante vendedor - dado do tipo `address`;
+    - `accountBuyer`: conta da PL do participante comprador - dado do tipo `address`;
+    - `tpftData`: "metadados" de um TPFt (token ERC20);
+      - `acronym`: acrônimo do TPFt, por ex. "LTN" - dado do tipo `string`;
+      - `code`: código do TPFt, por ex. "BRSTNCLTN7D3" - dado do tipo `string`;
+      - `maturityDate`: data de maturidade do TPFt, formato UNIX timestamp, por ex. "1719411661" - dado do tipo `inteiro`;
+    - `tpftAmount`: quantidade de TPFt - dado do tipo `inteiro`;
+    - `price`: preço unitário por TPFt - dado do tipo `inteiro`;
+    - `status`: estado inicial da operação, para vendedor, é sempre igual a 1, já para comprador, sempre igual a 2, independentemente do estado anterior da operação - dado do tipo `inteiro`;
+    - `isBetweenClients`: falso (`false`) para operação entre instituições financeiras, verdadeiro (`true`) para operação entre clientes finais de instituições financeiras - dado do tipo `booleano`;
+
+4. Estou tentando executar um exemplo, mas a transação da erro quando eu executo. O que fazer?
+    - Caso alguma de suas transações reverta, uma das opções utilizar o `data` da transação para tentar decodar com base nas ABIs disponíveis no projeto. A partir disso, você será capaz de conhecer melhor a mensagem de erro que justifica a reversão da respectiva transação e, com isso, poderá tentar readaptar o seu código para que flua como desejado;
+
+5. Meu exemplo começa a executar, porém a contagem que aparece na tela excede 120 segundos e então meu exemplo parece não apresentar um resultado coerente. O que fazer?
+    - Isso ocorre quando alguma de suas transações cross-chain falhou. Pode ser que alguma de suas informações do arquivo .env estejam erradas. Verifique e valide cada um dos valores associados às suas variáveis de ambiente. Caso o problema persista, vale a pena investigar nos logs do seu container da Privacy Ledger ou mesmo do Relayer, para tentar identificar se existe alguma mensagem de erro ou de reversão que possa estar associado à sua ação.
