@@ -78,7 +78,7 @@ async function example15() {
     await txOpReg.wait();
 
     const newStatus = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting register response from DVP contract", retry);
+        console.log("[DEBUG] Waiting claim response from DVP contract", retry);
         const _op = await tpftOpContract.operations(opData.operationId);
         if (_op.status != prevStatus) {
             return [true, _op.status];

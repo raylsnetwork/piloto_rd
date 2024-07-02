@@ -1,6 +1,6 @@
 # Delivery versus Payment entre Instituições Financeiras:
 
-Os exemplos a seguir não precisam ser executados, necessariamente, seguindo a numeração destacada no nome dos arquivos. As numerações elencadas nos nomes dos arquivos são apenas um guia. Todavia, é importante observar os pré-requisitos pois, apesar de alguns scripts poderem se executados "fora de ordem", devemos notar que os scripts de registro de operações de DVP devem preceder a execução dos scripts de liquidação das respectivas operações. Em suma: tanto faz a ordem, ao executar os exemplos 5 e 6 - desde que sejam executados antes dos exemplos 9 e 10.
+É importante observar os <strong>pré-requisitos</strong> pois, apesar de alguns scripts poderem se executados "fora de ordem", devemos notar que os scripts de registro de operações de DVP devem preceder a execução dos scripts de liquidação das respectivas operações, como já mencionado anteriormente nesta documencação.
 
 - [ex5-dvp-if-registro-vendedor.ts](./exemplos/ex5-dvp-if-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras).
 
