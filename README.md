@@ -50,7 +50,7 @@ Para maiores informações sobre a infraestrutura topológica da Rayls e da VEN,
 <br/>
 <br/>
 
-# <p align="center"> Exemplos </p>
+# <p align="center"> Roteiro de Execução </p>
 
 Os seguintes arquivos-fonte foram criados com o intuito de dar ao participante, um ponto de partida, um guia, sobre como interagir dos contratos inteligentes mencionados acima. Para mais informações sobre os contratos que foram desenvolvidos, [clique aqui](./docs/casos-uso-drex.md).
 
@@ -60,7 +60,7 @@ Os códigos foram testados em sua funcionalidade, todavia, não foram realizadas
 
 Antes de executar os scripts de exemplo, é imperativo que sejam preenchidas as informações do arquivo [.env](.env.example). Em seguida, executar o script de setup, [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts). Por fim, os scripts de exemplo exigem que as informações necessárias para executar as transações sejam preenchidas. Tais informações estão delineadas entre parênteses angulares (por exemplo: `<informações a serem preenchidas>`).
 
-Para rodar cada o setup e cada um dos exemplos que se seguem abaixo é necessário rodar o comando `run` do [Hardhat](https://hardhat.org/), sempre apontando para a rede desejada. Exemplo abaixo:
+Para rodar cada script de setup, bem como cada um dos scripts de exemplos que se seguem abaixo é necessário rodar o comando `run` do [Hardhat](https://hardhat.org/), sempre apontando para a rede desejada (`--network rayls`). Exemplo abaixo:
 
 `npx hardhat run exemplos/ex1-requisitar-emissao-cbdc.ts --network rayls`
 
@@ -68,11 +68,13 @@ Para rodar cada o setup e cada um dos exemplos que se seguem abaixo é necessár
 
 ### CDBC (atacado)
 
-Os exemplos desta seção correspondem às ações que podem ser realizadas e que envolvem exclusivamente o contrato `CBDC`.
+Os exemplos desta seção correspondem às ações que podem ser realizadas e que envolvem exclusivamente o contrato `CBDC`. Lembre-se, antes de mais nada, executar o setup principal [setup-participant-contracts.ts](./setup/setup-participant-contracts.ts). Em seguida, siga a seguinte ordem:
 
-- [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts): faz uma soliticação de emissão de novos CBDC para receber em uma conta;
+- A) [ex1-requisitar-emissao-cbdc.ts](./exemplos/ex1-requisitar-emissao-cbdc.ts): faz uma soliticação de emissão de novos CBDC para receber em uma conta;
 
-- [ex2-transferir-cbdc-atacado.ts](./exemplos/ex2-transferir-cbdc-atacado.ts): a partir da instituição de origem, envia Real Digital para uma segunda instituição de destino (atacado);
+- B) [ex2-transferir-cbdc-atacado.ts](./exemplos/ex2-transferir-cbdc-atacado.ts): a partir da instituição de origem, envia Real Digital para uma segunda instituição de destino (atacado);
+
+Scripts opcionais para o Real Digital (atacado):
 
 - [ex3-reversao-transferencia-cbdc-atacado.ts](./exemplos/ex3-reversao-transferencia-cbdc-atacado.ts): tenta realizar o envio de Real Digital para uma conta não autorizada, mas tem o envio revertido devido à não autorização;
 
@@ -80,55 +82,77 @@ Os exemplos desta seção correspondem às ações que podem ser realizadas e qu
 
 - [opcional_remove-conta-allowlist-cdbc](./exemplos/opcional_remove-conta-allowlist-cdbc.ts): desautoriza uma conta a receber CDBC;
 
-Caso queira maiores detalhes sobre os pré-requisitos necessários para executar cada script, [clique aqui](./docs/atacado-cbdc.md).
+Caso queira maiores detalhes sobre os <strong>pré-requisitos</strong> necessários para executar cada um dos exemplos de Real Digital (CBDC/DREX - atacado), [clique aqui](./docs/atacado-cbdc.md).
 
 <br/>
 
 ### Real Tokenizado (atacado)
 
-O exemplo desta seção corresponde às ações que podem ser realizadas e que envolvem o contrato `RealTokenizado`.
+O exemplo desta seção corresponde às ações que podem ser realizadas e que envolvem o contrato `RealTokenizado`. Esse caso de uso possui um requisito importante, que consiste garantir acesso ao endereço do contrato CBDC ao contrato RealTokenizado. Por isso, execute os scripts na seguinte ordem:
 
-- [ex4-transferir-realtokenizado-varejo.ts](./exemplos/ex4-transferir-realtokenizado-varejo.ts): a partir de um cliente em uma instituição de origem, envia Real Digital da reserva, bem como Real Tokenizado para uma segunda conta de cliente em uma instituição de destino (varejo);
+- C) [setup-participant-rt.ts](./setup/setup-participant-rt.ts): o endereço do contrato CBDC precisa estar autorizado a emitir e queimar tokens do contrato RealTokenizado. Dito isso, antes de executar este exemplo, deve-se executar o script de garantia de controle de acesso ao RealTokenizado. É importante dizer que esse passo (C) só precisa ser executado uma vez. Caso já tenha executado a etapa (C) anteriormente, então não será mais necessário executá-la para poder testar o `ex4` a seguir;
 
-Caso queira maiores detalhes sobre os pré-requisitos necessários para executar cada script, [clique aqui](./docs/varejo-real-tokenizado.md).
+- D) [ex4-transferir-realtokenizado-varejo.ts](./exemplos/ex4-transferir-realtokenizado-varejo.ts): a partir de um cliente em uma instituição de origem, envia Real Digital da reserva, bem como Real Tokenizado para uma segunda conta de cliente em uma instituição de destino (varejo);
+
+Caso queira maiores detalhes sobre os <strong>pré-requisitos</strong> necessários para executar cada um dos exemplos de Real Tokenizado (varejo), [clique aqui](./docs/varejo-real-tokenizado.md).
 
 <br/>
 
 ### Delivery versus Payment (DVP) entre Instituições Financeiras (IF)
 
-O exemplo desta seção corresponde a algumas ações que podem ser realizadas e que envolvem o contrato `TPFToperation`.
+O exemplo desta seção corresponde às ações que podem ser realizadas e que envolvem o contrato `TPFToperation` para que seja possível performar o DVP. É imprescindível que o vendedor tenha saldo de TPFt em sua conta para poder participar desse fluxo (tal saldo deve ser solicitado off-chain para a SELIC). Ainda, nota-se que diferentes scripts devem ser executados por participantes diferentes: vendedor executa apenas os scripts relacionados a ele, de forma similar, participante comprador executa apenas scripts de comprador. Dessa forma, os exemplos devem ser executados na seguinte ordem:
 
-- [ex5-dvp-if-registro-vendedor.ts](./exemplos/ex5-dvp-if-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras);
+- Scripts de registro da operação: 
 
-- [ex6-dvp-if-registro-comprador.ts](./exemplos/ex6-dvp-if-registro-comprador.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
+    - E) [ex5-dvp-if-registro-vendedor.ts](./exemplos/ex5-dvp-if-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>vendedor</strong>;
 
-- [ex7-dvp-if-req-reversao-vendedor.ts](./exemplos/ex7-dvp-if-req-reversao-vendedor.ts): realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras);
+    - E) [ex6-dvp-if-registro-comprador.ts](./exemplos/ex6-dvp-if-registro-comprador.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>comprador</strong>;
 
-- [ex8-dvp-if-req-reversao-comprador.ts](./exemplos/ex8-dvp-if-req-reversao-comprador.ts): realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
+    - Obs.: a ordem de quem registra primeiro não importa, ou seja, tanto faz vendedor ou comprador registrar primeiro, desde que ambos tenham registrado antes de tentar liquidar a operação.
 
-- [ex9-dvp-if-resgate-comprador.ts](./exemplos/ex9-dvp-if-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras); 
+- Scripts de liquidação da operação:
 
-- [ex10-dvp-if-resgate-vendedor.ts](./exemplos/ex10-dvp-if-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras); 
+    - F) [ex9-dvp-if-resgate-comprador.ts](./exemplos/ex9-dvp-if-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>comprador</strong>; 
 
-Caso queira maiores detalhes sobre os pré-requisitos necessários para executar cada script, [clique aqui](./docs/dvp-entre-ifs.md).
+    - F) [ex10-dvp-if-resgate-vendedor.ts](./exemplos/ex10-dvp-if-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>vendedor</strong>; 
+
+    - Obs.: a ordem de quem liquida primeiro não importa.
+
+Scripts opcionais para o DVP entre IFs:
+
+- [ex7-dvp-if-req-reversao-vendedor.ts](./exemplos/ex7-dvp-if-req-reversao-vendedor.ts): realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras). Esse exemplo só faz sentido se o apenas o registro da operação de DVP por parte do vendedor tiver sido executado - caso ambos, vendedor e comprador já tenham registrado para a mesma operação, será impossível solicitar reversão do respectivo DVP;
+
+- [ex8-dvp-if-req-reversao-comprador.ts](./exemplos/ex8-dvp-if-req-reversao-comprador.ts): realiza o cancelamento (reversão) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras). Esse exemplo só faz sentido se o apenas o registro da operação de DVP por parte do comprador tiver sido executado - caso ambos, vendedor e comprador já tenham registrado para a mesma operação, será impossível solicitar reversão do respectivo DVP;;
+
+Caso queira maiores detalhes sobre os <strong>pré-requisitos</strong> necessários para executar cada um dos exemplos de DVP entre IFs, [clique aqui](./docs/dvp-entre-ifs.md).
 
 <br/>
 
 ### Delivery versus Payment (DVP) entre Clientes
 
-O exemplo desta seção corresponde a ainda mais ações que podem ser realizadas e que envolvem o contrato `TPFToperation`.
+O exemplo desta seção corresponde a ainda mais ações que podem ser realizadas e que envolvem o contrato `TPFToperation`. É imprescindível que o vendedor tenha saldo de TPFt em sua conta para poder participar desse fluxo (tal saldo deve ser solicitado off-chain para a SELIC). Ainda, nota-se que diferentes scripts devem ser executados por participantes diferentes: vendedor executa apenas os scripts relacionados a ele, de forma similar, participante comprador executa apenas scripts de comprador. Dessa forma, os exemplos devem ser executados na seguinte ordem:
 
-- [ex11-transferir-tpft-entre-wd-e-cliente.ts](./exemplos/ex11-transferir-tpft-entre-wd-e-cliente.ts): realiza a transferência de Título Público Federal Tokenizado entre contas de uma mesma instituição financeira;
+Caso a SELIC tenha enviado saldo TPFt para a sua conta padrão, de sua PL, então você precisará, antes de mais nada, enviar saldo de TPFt para a conta de seu cliente vendedor, executando o `ex11` a seguir. Caso sua conta de cliente já pessoa saldo de TPFt, então esse passo (G) pode ser ignorado.
 
-- [ex12-dvp-cliente-registro-vendedor.ts](./exemplos/ex12-dvp-cliente-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre clientes de instituições financeiras); 
+- G) [ex11-transferir-tpft-entre-wd-e-cliente.ts](./exemplos/ex11-transferir-tpft-entre-wd-e-cliente.ts): realiza a transferência de Título Público Federal Tokenizado entre contas de uma mesma instituição financeira - esse script deve ser executado tão e somente pelo <strong>vendedor</strong>;;
 
-- [ex13-dvp-cliente-registro-comprador.ts](./exemplos/ex13-dvp-cliente-registro-comprador.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre clientes de instituições financeiras); 
+Scripts de registro da operação: 
 
-- [ex14-dvp-cliente-resgate-vendedor.ts](./exemplos/ex14-dvp-cliente-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre clientes de instituições financeiras); 
+- H) [ex12-dvp-cliente-registro-vendedor.ts](./exemplos/ex12-dvp-cliente-registro-vendedor.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre clientes de instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>vendedor</strong>;
 
-- [ex15-dvp-cliente-resgate-comprador.ts](./exemplos/ex15-dvp-cliente-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre clientes de instituições financeiras); 
+- H) [ex13-dvp-cliente-registro-comprador.ts](./exemplos/ex13-dvp-cliente-registro-comprador.ts): realiza o lançamento (registro) de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre clientes de instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>comprador</strong>;
 
-Caso queira maiores detalhes sobre os pré-requisitos necessários para executar cada script, [clique aqui](./docs/dvp-entre-clientes.md).
+- Obs.: a ordem de quem registra primeiro não importa, ou seja, tanto faz vendedor ou comprador registrar primeiro, desde que ambos tenham registrado antes de tentar liquidar a operação.
+
+Scripts de liquidação da operação:
+
+- I) [ex14-dvp-cliente-resgate-vendedor.ts](./exemplos/ex14-dvp-cliente-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre clientes de instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>vendedor</strong>;
+
+- I) [ex15-dvp-cliente-resgate-comprador.ts](./exemplos/ex15-dvp-cliente-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre clientes de instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>comprador</strong>;
+
+- Obs.: a ordem de quem liquida primeiro não importa.
+
+Caso queira maiores detalhes sobre os <strong>pré-requisitos</strong> necessários para executar cada um dos exemplos de DVP entre Clientes de IFs, [clique aqui](./docs/dvp-entre-clientes.md).
 
 <br/>
 <br/>
