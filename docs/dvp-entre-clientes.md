@@ -1,5 +1,7 @@
 # Delivery versus Payment entre Clientes de Instituições Financeiras:
 
+É importante observar os <strong>pré-requisitos</strong> pois, apesar de alguns scripts poderem se executados "fora de ordem", devemos notar que os scripts de registro de operações de DVP devem preceder a execução dos scripts de liquidação das respectivas operações, como já mencionado anteriormente nesta documencação.
+
 - [ex11-transferir-tpft-entre-wd-e-cliente.ts](./exemplos/ex11-transferir-tpft-entre-wd-e-cliente.ts): realiza a transferência de Título Público Federal Tokenizado entre contas de uma mesma instituição financeira;
 
   <strong>Pré-requisitos:</strong>
