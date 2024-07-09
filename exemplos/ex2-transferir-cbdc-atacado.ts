@@ -76,9 +76,9 @@ async function example2() {
         teleportNonce = dispatchEvents[0].args._reqNonce;
     }
     console.log("[DEBUG] teleportNonce:", teleportNonce);
-
+    console.time("Waiting teleportAtomic acknowledgement");
     const teleportAcknowledged = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting teleportAtomic acknowledgement", retry);
+       
         const currentBlockNumber = await ethers.provider.getBlockNumber();
         const events = await cbdcContract.queryFilter(
             cbdcContract.filters.teleportAtmAcknowledged(),
@@ -90,6 +90,7 @@ async function example2() {
             return [true, events[0].args._reqNonce];
         } else return [false, BigInt(0)];
     });
+    console.timeEnd("Waiting teleportAtomic acknowledgement");
     console.log("[DEBUG] teleportAcknowledged:", teleportAcknowledged);
 
     const balanceAfter = await getBalanceCBDCSync(

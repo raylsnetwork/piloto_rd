@@ -73,18 +73,18 @@ async function example7() {
 
     const txRevert = await tpftOpContract.requestRevertOperation(opData);
     await txRevert.wait();
-
+    console.time("Waiting register response from DVP contract");
     const newStatus = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting reversion response from DVP contract", retry);
+     
         const _op = await tpftOpContract.operations(opData.operationId);
         if (_op.status > prevStatus) {
             return [true, _op.status];
         } else return [false, false];
     });
+    console.timeEnd("Waiting register response from DVP contract");
     console.log("[DEBUG] newStatus:", newStatus);
-
     const balanceAfterRevertion = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting TPFt balance to be updated", retry);
+
         const balanceTPFt = await getBalanceTPFTSync(
             endpointContract, 
             tpftResourceId, 

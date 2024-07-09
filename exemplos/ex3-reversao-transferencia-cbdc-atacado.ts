@@ -68,8 +68,9 @@ async function example3() {
     console.log("[DEBUG] balanceInBetween:", balanceInBetween);
 
     console.log("[DEBUG] Entering reversal balance check...");
+    console.time("[DEBUG] Waiting CBDC balance to be updated:");
     const balanceAfter = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting CBDC balance to be updated:", retry);
+
         const balanceCBDC = await getBalanceCBDCSync(
             endpointContractA, 
             cbdcResourceId, 
@@ -80,6 +81,7 @@ async function example3() {
             return [true, balanceCBDC];
         } else return [false, BigInt(0)];
     });
+    console.timeEnd("[DEBUG] Waiting CBDC balance to be updated:");
     console.log("[DEBUG] balanceAfter:", balanceAfter);
 }
 

@@ -75,19 +75,20 @@ async function example9() {
     console.log("[DEBUG] Claiming operation as buyer...");
     let txClaim = await tpftOpContract.claimOperation(opData);
     await txClaim.wait();
+    console.time("Waiting register response from DVP contract");
 
     const newStatus = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting register response from DVP contract", retry);
+
         const _op = await tpftOpContract.operations(opData.operationId);
         if (_op.status > prevStatus) {
             return [true, _op.status];
         } else return [false, false];
     });
+    console.timeEnd("Waiting register response from DVP contract");
     console.log("[DEBUG] newStatus:", newStatus);
-    
+    console.time("Waiting TPFt balance to be updated");
     const balanceAfter = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting TPFt balance to be updated:", retry);
-
+       
         const balanceTpfT = await getBalanceTPFTSync(
             endpointContract, 
             tpftResourceId, 
@@ -99,6 +100,7 @@ async function example9() {
             return [true, balanceTpfT];
         } else return [false, BigInt(0)];
     });
+    console.timeEnd("Waiting TPFt balance to be updated");
     console.log("[DEBUG] balanceAfter", balanceAfter);
 }
 

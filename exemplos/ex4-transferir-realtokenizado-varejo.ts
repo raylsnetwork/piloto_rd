@@ -107,9 +107,9 @@ async function example4() {
         swapNonce = dispatchEvents[0].args._reqNonce;
     }
     console.log("[DEBUG] swapNonce:", swapNonce);
-
+    console.time("Waiting swap acknowledgement");
     const swapAcknowledged = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting swap acknowledgement", retry);
+   
         const currentBlockNumber = await ethers.provider.getBlockNumber();
         const events = await cbdcContract.queryFilter(
             cbdcContract.filters.swapAcknowledged(),
@@ -121,6 +121,7 @@ async function example4() {
             return [true, events[0].args._reqNonce];
         } else return [false, BigInt(0)];
     });
+    console.timeEnd("Waiting swap acknowledgement");
     console.log("[DEBUG] swapAcknowledged:", swapAcknowledged);
 
     const balancRTAfter = await getBalanceRTSync(
