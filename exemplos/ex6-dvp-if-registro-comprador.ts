@@ -96,14 +96,15 @@ async function example6() {
     console.log("[DEBUG] Registering operation as buyer...");
     const txOpReg = await tpftOpContract.callRegisterOperation(opData);
     await txOpReg.wait();
-
+    console.time("Waiting register response from DVP contract");
     const newStatus = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting register response from DVP contract", retry);
+    
         const _op = await tpftOpContract.operations(opData.operationId);
         if (_op.status > prevStatus) {
             return [true, _op.status];
         } else return [false, false];
     });
+    console.timeEnd("Waiting register response from DVP contract");
     console.log("[DEBUG] newStatus:", newStatus);
 
     const balanceAfter = await getBalanceCBDCSync(

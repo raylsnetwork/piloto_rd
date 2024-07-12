@@ -96,9 +96,8 @@ async function example12() {
     console.log("[DEBUG] Registering operation as seller...");
     let txOpReg = await tpftOpContract.callRegisterOperation(opData);
     await txOpReg.wait();
-
+    console.time("Waiting register response from DVP contract");
     const newStatus = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting register response from DVP contract", retry);
         const _op = await tpftOpContract.operations(opData.operationId);
         if (_op.status != prevStatus) {
             return [true, _op.status];

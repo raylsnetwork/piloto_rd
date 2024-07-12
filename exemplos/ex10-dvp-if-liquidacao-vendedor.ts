@@ -73,18 +73,19 @@ async function example10() {
     console.log("[DEBUG] Claiming operation as seller...");
     let txClaim = await tpftOpContract.claimOperation(opData);
     await txClaim.wait();
-
+    console.time("Waiting claim response from DVP contract");
     const newStatus = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting claim response from DVP contract", retry);
+        
         const _op = await tpftOpContract.operations(opData.operationId);
         if (_op.status > prevStatus) {
             return [true, _op.status];
         } else return [false, false];
     });
+    console.timeEnd("Waiting claim response from DVP contract");
     console.log("[DEBUG] newStatus:", newStatus);
-    
+    console.time("Waiting CBDC balance to be updated");
     const balanceAfter = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting CBDC balance to be updated:", retry);
+    
         const balanceCBDC = await getBalanceCBDCSync(
             endpointContract, 
             cbdcResourceId, 
@@ -95,6 +96,7 @@ async function example10() {
             return [true, balanceCBDC];
         } else return [false, BigInt(0)];
     });
+    console.timeEnd("Waiting CBDC balance to be updated");
     console.log("[DEBUG] balanceAfter", balanceAfter);
 }
 

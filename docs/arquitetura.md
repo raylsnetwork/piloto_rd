@@ -11,13 +11,13 @@ O esquema ilustrativo, a seguir, demonstra como uma Privacy Ledger de propriedad
     </p>
 </p>
 
-Como podemos observar, na ilustração acima, os contratos inteligentes podem existir tanto na Privacy Ledger quanto na Commit Chain, sendo elas blockchains distintas e funcionais. A comunicação entre PL e Commit Chain se dará através da figura do Relayer, que é um serviço que realiza escuta ativa de eventos que ocorrem na respectiva PL e propaga tais eventos à(s) blockchain(s) interessada(s), de forma criptografada e, privada. Ou seja, toda e qualquer mensagem que trafega pela VEN através da Commit Chain será confidencial e poderá ser acessível apenas pelas partes autorizadas (terceiros participantes da rede não terão acesso às respectivas trocas de mensagem). 
+Como podemos observar, na ilustração acima, os contratos inteligentes podem existir tanto na Privacy Ledger quanto na Commit Chain, sendo elas blockchains distintas e funcionais. A comunicação entre PL e Commit Chain se dará através da figura do Relayer, que é um serviço que realiza escuta ativa de eventos que ocorrem na respectiva PL e propaga tais eventos à(s) blockchain(s) interessada(s), de forma criptografada e, privada. Ou seja, toda e qualquer mensagem que trafega pela Private Subnet através da Commit Chain será confidencial e poderá ser acessível apenas pelas partes autorizadas (terceiros participantes da rede não terão acesso às respectivas trocas de mensagem). 
 
-Em suma, pode-se dizer que a arquitetura da VEN foi construída de forma a garantir que: 
+Em suma, pode-se dizer que a arquitetura da Private Subnet foi construída de forma a garantir que: 
 
 - Tudo o que ocorre dentro de uma PL é privado, e somente os administradores da respectiva PL poderão autorizar acesso a ela; 
 
-- Os contratos inteligentes e protocolos podem ser executados tanto nas PLs quanto na Commit Chain, a depender dos papéis de cada ator na VEN; 
+- Os contratos inteligentes e protocolos podem ser executados tanto nas PLs quanto na Commit Chain, a depender dos papéis de cada ator na Private Subnet; 
 
 - A comunicação entre PLs se dará por intermédio da Commit Chain, protegida por criptografia de ponta a ponta; 
 

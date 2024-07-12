@@ -32,11 +32,11 @@ Uma PL é, basicamente, uma blockchain privada construída sobre a tecnologia Pa
 
 Cada instituição participante administrará sua própria PL. Vale ressaltar que as informações que trafegam dentro da PL são privadas, ou seja, apenas a organização proprietária da respectiva Privacy Ledger controlará o acesso a tais informações e recursos.
 
-### Value Exchange Network (VEN) 
+### Private Subnet
 
-A VEN existe em um contexto no qual diversas PLs podem se conectar, compondo um ecossistema de blockchains, administrado pelo BACEN. Para garantir a comunicação existe a Commit Chain, uma blockchain privada cujos propósitos são vários, dentre os quais: 
+A Private Subnet existe em um contexto no qual diversas PLs podem se conectar, compondo um ecossistema de blockchains, administrado pelo BACEN. Para garantir a comunicação existe a Commit Chain, uma blockchain privada cujos propósitos são vários, dentre os quais: 
 
-- Servir como infraestrutura central de comunicação entre as PLs participantes da VEN; 
+- Servir como infraestrutura central de comunicação entre as PLs participantes da Private Subnet; 
 
 - Gerenciar o recebimento e propagação de mensagens entre PLs distintas, tomando por base a EIP-5164; 
 
@@ -44,7 +44,7 @@ A VEN existe em um contexto no qual diversas PLs podem se conectar, compondo um 
 
 Enquanto cada Instituição participará do ecossistema com sua respectiva PL, a Commit Chain é administrada pelo BACEN e instalada em seu ambiente. 
 
-Para maiores informações sobre a infraestrutura topológica da Rayls e da VEN, [clique aqui](./docs/arquitetura).
+Para maiores informações sobre a infraestrutura topológica da Rayls e da Private Subnet, [clique aqui](./docs/arquitetura).
 
 <br/>
 <br/>

@@ -72,15 +72,17 @@ async function example8() {
 
     const txRevert = await tpftOpContract.requestRevertOperation(opData);
     await txRevert.wait();
-
+    console.time("Waiting reversion response from DVP contract");
     const newStatus = await TimeoutExecution(async (retry) => {
-        console.log("[DEBUG] Waiting reversion response from DVP contract", retry);
+      
         const _op = await tpftOpContract.operations(opData.operationId);
         if (_op.status > prevStatus) {
             return [true, _op.status];
         } else return [false, false];
     });
+    console.timeEnd("Waiting reversion response from DVP contract");
     console.log("[DEBUG] newStatus:", newStatus);
+    console.time("Waiting CBDC balance to be updated:");
 
     const balanceAfterRevertion = await TimeoutExecution(async (retry) => {
         console.log("[DEBUG] Waiting CBDC balance to be updated:", retry);
@@ -94,6 +96,7 @@ async function example8() {
             return [true, balanceCBDC];
         } else return [false, BigInt(0)];
     });
+    console.timeEnd("Waiting CBDC balance to be updated:");
     console.log("[DEBUG] balanceAfterRevertion", balanceAfterRevertion);
 }
 
