@@ -172,7 +172,7 @@ Caso queira maiores detalhes sobre os <strong>pré-requisitos</strong> necessár
     - `chainIdBuyer`: Chain ID da PL do participante comprador - dado do tipo `inteiro`;
     - `accountSeller`: conta da PL do participante vendedor - dado do tipo `address`;
     - `accountBuyer`: conta da PL do participante comprador - dado do tipo `address`;
-    - `tpftData`: "metadados" de um TPFt (token ERC20);
+    - `tpftData`: "metadados" de um TPFt (token ERC-1155);
       - `acronym`: acrônimo do TPFt, por ex. "LTN" - dado do tipo `string`;
       - `code`: código do TPFt, por ex. "BRSTNCLTN7D3" - dado do tipo `string`;
       - `maturityDate`: data de maturidade do TPFt, formato UNIX timestamp, por ex. "1719411661" - dado do tipo `inteiro`;
