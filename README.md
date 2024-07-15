@@ -8,7 +8,7 @@
 
 A Parfin, por meio de sua blockchain layer 0, a Rayls, permite a criação de ambientes permissionados compatíveis com EVM. Através dessa infraestrutura, é possível desenvolver ecossistemas que integram diversas redes privadas de forma que as mensagens que trafegam pela rede sejam totalmente confidenciais, por meio de criptografia ponto a ponto. 
 
-Dessa forma, torna-se possível o desenvolvimento de aplicações descentralizadas como DeFi, Tokenização, entre outras. Tudo com compatibilidade, interoperabilidade, composabilidade e robustez.
+Dessa forma, torna-se possível o desenvolvimento de aplicações descentralizadas como DeFi, Tokenização, entre outras. Tudo com privacidade, convidencialidade, compatibilidade, interoperabilidade, composabilidade e robustez.
 
 <br/>
 <br/>
@@ -158,7 +158,30 @@ Caso queira maiores detalhes sobre os <strong>pré-requisitos</strong> necessár
 <br/>
 <br/>
 
+# Validação de Confidencialidade e Privacidade:
+
+A solução proposta garante a privacidade das transações que trafegam pela Private Subnet. Para verificar que, de fato, as informações são trocadas de maneira confidencial entre as PLs, você pode seguir o seguinte tutorial para executar o passo a passo que atesta a privacidade das transações: [Tutorial para Checagem de Privacidade na Private Subnet](./privacy/how-to.md).
+
+<br/>
+<br/>
+<br/>
+
 # Perguntas Frequentes (FAQ):
+
+1. O que é "Chain Id" e como devo preencher essa informação em meu ambiente?
+    - A informação Chain Id (variável de ambiente `CHAINID`) deve ser preenchido com o Código ISPB da respectiva instituição participante - ela corresponde ao identificador único da rede (PL)  de cada participante.
+
+2. Qual é o "Chain Id" da Commit Chain?
+    - Essa informação pode ser encontrada no config map do Relayer de sua respectiva PL.
+
+3. O que é "Resource Id"?
+    - Essa informação corresponde ao identificador de um recurso existente na rede. Em linhas gerais, corresponde a um identificador único para ativos que vivem na Private Subnet.
+
+4. Como posso verificar a privacidade das transações entre PLs?
+    - Basta executar o script de checagem de privacidade, seguindo este passo a passo: [Tutorial para Checagem de Privacidade na Private Subnet](./privacy/how-to.md).
+
+5. Como posso verificar os saldos dos ativos relacionados às contas que configurei em meu ambiente?
+    - Uma vez que seu arquivo `.env` foi configurado corretamente e que o setup deste repositório tenha sido executado, basta utilizar o [Script de Consulta de Saldos](./exemplos/opcional_consultar-saldos.ts).
 
 1. Qual a utilidade da variável de ambiente ENDPOINT_ADDR? Onde posso encontrar essa informação?
     - É o endereço do contrato Endpoint que, por sua vez, faz parte do protocolo de comunicação cross-chain da Rayls. Esse endereço é informado no output do console do Relayer, um dos componentes do ambiente de infraestrutura necessária para ter uma Rayls em plena execução. Para maiores informações sobre o setup do Relayer, [clique aqui](https://github.com/raylsnetwork/piloto_rd_setup/blob/main/kubernetes/README.md#rayls-relayer).
