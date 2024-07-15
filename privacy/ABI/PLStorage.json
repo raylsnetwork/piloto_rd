@@ -1,0 +1,684 @@
+[
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "print",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "data",
+          "type": "string"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "EncryptedDataStored",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "parentHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "uncleHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "coinbase",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "stateRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "transactionsRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "receiptsRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "logsBloom",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256",
+              "name": "difficulty",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "number",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "gasLimit",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "gasUsed",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "timestamp",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint8[]",
+              "name": "extra",
+              "type": "uint8[]"
+            },
+            {
+              "internalType": "string",
+              "name": "mixHash",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes8",
+              "name": "nonce",
+              "type": "bytes8"
+            },
+            {
+              "internalType": "string",
+              "name": "_hash",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct PLStorage.Header",
+          "name": "header",
+          "type": "tuple"
+        }
+      ],
+      "name": "addHeader",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_hash",
+          "type": "string"
+        },
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "parentHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "uncleHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "coinbase",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "stateRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "transactionsRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "receiptsRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "logsBloom",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256",
+              "name": "difficulty",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "number",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "gasLimit",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "gasUsed",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "timestamp",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint8[]",
+              "name": "extra",
+              "type": "uint8[]"
+            },
+            {
+              "internalType": "string",
+              "name": "mixHash",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes8",
+              "name": "nonce",
+              "type": "bytes8"
+            },
+            {
+              "internalType": "string",
+              "name": "_hash",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct PLStorage.Header",
+          "name": "header",
+          "type": "tuple"
+        }
+      ],
+      "name": "addSingleHeader",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "allPrivateLedgers",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "auditInfoData",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "publicKey",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "encryptedPrivateKey",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "mac",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getAllPrivateLedgers",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAuditInfo",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "chainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "publicKey",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "encryptedPrivateKey",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "mac",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct PLStorage.AuditInfoData",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getChainInfo",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "chainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "publicKey",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct PLStorage.PrivateLedgerData",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "print",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "getEncryptedData",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "data",
+          "type": "string[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getHeaders",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "parentHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "uncleHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "coinbase",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "stateRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "transactionsRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "receiptsRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "logsBloom",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256",
+              "name": "difficulty",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "number",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "gasLimit",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "gasUsed",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "timestamp",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint8[]",
+              "name": "extra",
+              "type": "uint8[]"
+            },
+            {
+              "internalType": "string",
+              "name": "mixHash",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes8",
+              "name": "nonce",
+              "type": "bytes8"
+            },
+            {
+              "internalType": "string",
+              "name": "_hash",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct PLStorage.Header[]",
+          "name": "header",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_hash",
+          "type": "string"
+        }
+      ],
+      "name": "getSingleHeader",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "parentHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "uncleHash",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "coinbase",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "stateRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "transactionsRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "receiptsRoot",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "logsBloom",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256",
+              "name": "difficulty",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "number",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint64",
+              "name": "gasLimit",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "gasUsed",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "timestamp",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint8[]",
+              "name": "extra",
+              "type": "uint8[]"
+            },
+            {
+              "internalType": "string",
+              "name": "mixHash",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes8",
+              "name": "nonce",
+              "type": "bytes8"
+            },
+            {
+              "internalType": "string",
+              "name": "_hash",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct PLStorage.Header",
+          "name": "header",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "privateLedgerData",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "publicKey",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "publicKey",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "encryptedPrivateKey",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "mac",
+          "type": "bytes"
+        }
+      ],
+      "name": "setAuditInfo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "chainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "publicKey",
+          "type": "string"
+        }
+      ],
+      "name": "setChainInfo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "print",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "data",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "storeEncryptedData",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]

@@ -1,0 +1,8 @@
+{
+    "cc_rpc_url": "http://commitchain-sandbox.parfin.corp:8545",
+    "cc_plstorage_address": "0x7613D140eb115BDFCAE334688Ff1faC55ae9EE7F",
+    "block_range": 15,
+    "destination_abi_path": "ABI/DestionationABI.json",
+    "secret_key": "2b12e2dedd4c4bc0532dc4f1143dc15e0c522cb00cb0d3f5b3cc0f1234501440edb4f04ebd",
+    "public_key": "51f9c641be27d73823bd5ed65430e34c5472cf1f8a9607193c9a9a3014b09d79baf965f5ca8e979626c481c617d30ba7512426b63a8eabc1499b60d61811f103"
+}
