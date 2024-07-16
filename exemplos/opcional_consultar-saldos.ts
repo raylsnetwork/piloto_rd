@@ -7,7 +7,9 @@ async function getBalances() {
         endpointContractAddr,
         cbdcResourceId,
         tpftResourceId,
-        rtResourceId
+        strResourceId,
+        rtResourceId,
+        tpftOpResourceId
     } = await getPLInformation();
 
     const [reservesSigner, clientSigner] = await ethers.getSigners();
@@ -83,7 +85,35 @@ async function getBalances() {
         tpftData
     );
     console.log("[DEBUG] TPFt client account balance", balanceTpftClient);
+    console.log("");
 
+    const strAddr = await endpointContract.resourceIdToContractAddress(
+      strResourceId
+    );
+
+    const cbdcAddr = await endpointContract.resourceIdToContractAddress(
+      cbdcResourceId
+    );
+
+    const realTokenizadoAddr = await endpointContract.resourceIdToContractAddress(
+      rtResourceId
+    );
+
+    const tpftAddr = await endpointContract.resourceIdToContractAddress(
+      tpftResourceId
+    );
+
+    const tpftOpAddr = await endpointContract.resourceIdToContractAddress(
+      tpftOpResourceId
+    );
+
+    console.log("[DEBUG] All Contracts Addresses:");
+    console.log("[DEBUG] STR:", strAddr);
+    console.log("[DEBUG] CDBC:", cbdcAddr);
+    console.log("[DEBUG] RealTokenizado:", realTokenizadoAddr);
+    console.log("[DEBUG] TPFt:", tpftAddr);
+    console.log("[DEBUG] TPFToperation:", tpftOpAddr);
+    
 }
 
 getBalances()
