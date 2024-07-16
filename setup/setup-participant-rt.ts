@@ -4,22 +4,21 @@ import RealTokenizadoABI from "../abi/RealTokenizado.json";
 
 
 async function main() {
-    const rpcUrlIf = process.env.RPCURL ?? "";
-    const privateKeyIf = process.env.PRIVATEKEY_DEPLOYER ?? "";
-    const endpointAddrIf = process.env.ENDPOINT_ADDR ?? "";
+
+    const endpointAddr = process.env.ENDPOINT_ADDR ?? "";
     const resourceIdCBDC = process.env.RESOURCEID_CBDC ?? "";
     const resourceIdRT = ethers.id("RealTokenizado")
 
-    let providerIf = new ethers.JsonRpcProvider(rpcUrlIf);
-    let signerIf = new ethers.Wallet(privateKeyIf, providerIf);
+    
+    const [deployerSigner] = await ethers.getSigners();
 
     const MINTER_ROLE = ethers.id("MINTER_ROLE");
     const BURNER_ROLE = ethers.id("BURNER_ROLE");
 
     const endpointContract = await ethers.getContractAt(
         IendpointContractABI, 
-        endpointAddrIf, 
-        signerIf
+        endpointAddr, 
+        deployerSigner
     );
 
     const cbdcAddr = await endpointContract.resourceIdToContractAddress(
@@ -33,7 +32,7 @@ async function main() {
     const RTContract = await ethers.getContractAt(
         RealTokenizadoABI, 
         realTokenizadoAddr, 
-        signerIf
+        deployerSigner
     );
 
     console.log("[DEBUG] Granting MINTER_ROLE & BURNER_ROLE to CBDC's address at RealTokenizado...");

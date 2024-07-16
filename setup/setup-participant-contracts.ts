@@ -10,7 +10,7 @@ import RealTokenizadoBytecode from "../bytecode/RealTokenizado.json";
 import TPFTopBytecode from "../bytecode/TPFToperation.json";
 
 async function main() {
-    const endpointAddrIf = process.env.ENDPOINT_ADDR ?? "";
+    const endpointAddr = process.env.ENDPOINT_ADDR ?? "";
     const chainIdBacen = process.env.CHAINID_BACEN ?? "";
     const chainIdSelic = process.env.CHAINID_SELIC ?? "";
     const cbdcResourceId = process.env.RESOURCEID_CBDC ?? "";
@@ -28,7 +28,7 @@ async function main() {
     // Instanciando IEndpoint para registrar os Resource Ids relevantes
     const endpointIf = await ethers.getContractAt(
         IEndpointABI, 
-        endpointAddrIf,
+        endpointAddr,
         deployerSigner
     );
 
@@ -40,9 +40,7 @@ async function main() {
     );
     await txRegWD.wait();
     console.log(
-        `[DEBUG] 
-        Wallet Default registered to Resource Id '${wdResourceId}' 
-        with address '${deployerSigner.address}'.`
+        `[DEBUG] Wallet Default registered to Resource Id '${wdResourceId}' with address '${deployerSigner.address}'.`
     );
 
     // Deploy e registro do contrato STR
@@ -53,7 +51,7 @@ async function main() {
         deployerSigner
     );
     const strContract = await strContractFactory.deploy(
-        endpointAddrIf,
+        endpointAddr,
         chainIdBacen,
         cbdcResourceId,
         wdResourceId
@@ -65,9 +63,7 @@ async function main() {
     );
     await txRegSTR.wait();
     console.log(`
-        [DEBUG] 
-        STR deployed and registered to Resource Id '${strResourceId}' 
-        with address '${strContract.target}'.`
+        [DEBUG] STR deployed and registered to Resource Id '${strResourceId}' with address '${strContract.target}'.`
     );
 
     // Deploy e registro do contrato RealTokenizado
@@ -85,9 +81,7 @@ async function main() {
     );
     await txRegRT.wait();
     console.log(`
-        [DEBUG] 
-        RealTokenizado deployed and registered to Resource Id '${rtResourceId}' 
-        with address '${rtContract.target}'.`
+        [DEBUG] RealTokenizado deployed and registered to Resource Id '${rtResourceId}' with address '${rtContract.target}'.`
     );
 
     // Deploy e registro do contrato DVP
@@ -98,7 +92,7 @@ async function main() {
         deployerSigner
     );
     const tpftOpContract = await tpftOpContractFactory.deploy(
-        endpointAddrIf, 
+        endpointAddr, 
         chainIdSelic,
         cbdcResourceId,
         tpftResourceId,
@@ -113,9 +107,7 @@ async function main() {
     );
     await txRegOpClaim.wait();
     console.log(`
-        [DEBUG] 
-        TPFToperation deployed and registered to Resource Id '${tpftOpResourceId}' 
-        with address '${rtContract.target}'.`
+        [DEBUG] TPFToperation deployed and registered to Resource Id '${tpftOpResourceId}' with address '${tpftOpContract.target}'.`
     );
 }
 
