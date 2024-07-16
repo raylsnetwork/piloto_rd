@@ -50,9 +50,27 @@ Para maiores informações sobre a infraestrutura topológica da Rayls e da Priv
 <br/>
 <br/>
 
+# <p align="center"> Informações Relevantes </p>
+
+Antes de irmos à experimentação com os exemplos, vejamos algumas informações relevantes:
+
+- Parâmetros:
+    - Chain Id dos Participantes: essa informação deve ser preenchida com o respectivo código ISPB da instituição participante;
+    - Chain Id da Commit Chain: `381660001`;
+    - Cada Participante terá sua conta Default (conta de reservas);
+    - Cada Participante terá uma wallet (conta) para clientes;
+    - Resource Id: essa informação é dada pelo operador da Private Subnet e corresponde a um identificador único para cada ativo que circula na rede;
+- Onde encontrar os endereços dos contratos: no momento do setup, imprime-se no console o endereço dos contratos deployados.
+- Averiguação de privacidade: para tanto, acessar o ["How To"]((./privacy/how-to.md)).
+- Para consultar seus saldos, basta executar o exemplo [opcional_consultar-saldos.ts](./exemplos/opcional_consultar-saldos.ts).
+
+<br/>
+<br/>
+<br/>
+
 # <p align="center"> Roteiro de Execução </p>
 
-Os seguintes arquivos-fonte foram criados com o intuito de dar ao participante, um ponto de partida, um guia, sobre como interagir dos contratos inteligentes mencionados acima. Para mais informações sobre os contratos que foram desenvolvidos, [clique aqui](./docs/casos-uso-drex.md).
+Os seguintes arquivos-fonte foram criados com o intuito de dar ao participante, um ponto de partida, um guia, sobre como interagir dos contratos inteligentes mencionados acima. Para mais informações sobre os contratos que foram desenvolvidos, [clique aqui](./docs/casos-uso-drex.md). <strong>Para usuários não técnicos, recomendamos utilizar o Portal Rayls DREX</strong>, [clicando aqui](https://portal-rayls-drex.parfin.io/).
 
 Os exemplos foram escritos em Typescript, utilizando o framework [Hardhat](https://hardhat.org/). Isso não é uma recomendação do uso da ferramenta por parte da Parfin. Os participantes são livres para desenvolverem a interação com os contratos inteligente da forma que bem entenderem.
 
