@@ -54,7 +54,7 @@
   
   5. O estado (`status`) da operação precisa refletir o fato de que o registro da respectiva operação foi feito apenas pela parte compradora. Ocorre que, caso ambas as partes tenham feito seus registros, e tais registros tenham sido compatíveis, então não será possível solicitar o cancelamento da operação.
 
-- [ex9-dvp-if-resgate-comprador.ts](./exemplos/ex9-dvp-if-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
+- [ex9-dvp-if-liquidacao-comprador.ts](./exemplos/ex9-dvp-if-liquidacao-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras);
 
   <strong>Pré-requisitos:</strong>
 
@@ -64,7 +64,7 @@
 
   3. É necessário conhecer dados da operação, a saber: os Chain Ids das partes envolvidas; os endereços das contas envolvidas; os metadados (`TPFtData`) do título negociado; a quantidade (`tpftAmount`) de títulos negociados; o preço (`price`) a ser pago por unidade de TPFt; o estado inicial (`status` - 1 p/ vendedor, 2 p/ comprador) da operação e; a informação de confirmação de que a operação será realizada entre duas instituições, em detrimento de entre dois clientes finais (`isBetweenClients` = `false`).
 
-- [ex10-dvp-if-resgate-vendedor.ts](./exemplos/ex10-dvp-if-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras); 
+- [ex10-dvp-if-liquidacao-vendedor.ts](./exemplos/ex10-dvp-if-liquidacao-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras); 
 
   <strong>Pré-requisitos:</strong>
 
