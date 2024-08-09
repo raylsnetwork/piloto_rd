@@ -18,8 +18,8 @@
     - `cc_plstorage_address`: endereço do contrato PLStorage do protocolo Rayls que reside na Commit Chain;(`CommitChain.ParticipantStorageContract` do config map do Relayer do participante);
     - `block_range`: número de blocos que o script de privacidade irá investigar (recomenda-se algo como de 15 a 30 blocos);
     - `destination_abi_path`: ABI do contrato que executará a mensagem no destino. Recomenda-se copiar a respectiva ABI e colar no arquivo `ABI/DestionationABI.json`;
-    - `secret_key`: chave criptográfica privada da qual o participante tem acesso (`Blockchain.DhSecret` do config map do Relayer do participante);
-    - `public_key`: chave criptográfica pública da contraparte (`Blockchain.DhPublic` do config map do Relayer da contraparte).
+    - `secret_key`: chave criptográfica privada da qual o participante tem acesso (armazenada no `mongodb`, `rayls-relayer` database, collection `secrets`, `dh_secret`);
+    - `public_key`: chave criptográfica pública da contraparte (armazenada no `mongodb`, `rayls-relayer` database, collection `secrets`, `dh_public`).
 
 2) Invocar a função do smart contract de origem que irá disparar uma mensagem cross-chain. Importante notar que a ABI do contrato de destino deve ter relação com a mensagem cross-chain disparada na origem. Ou seja, o contrato de origem deve invocar o contrato destino (e sua respectiva ABI de destino) para que o presente script de privacidade seja capaz de decodar a mensagem disparada.
 
