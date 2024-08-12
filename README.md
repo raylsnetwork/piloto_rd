@@ -44,7 +44,7 @@ A Private Subnet existe em um contexto no qual diversas PLs podem se conectar, c
 
 Enquanto cada Instituição participará do ecossistema com sua respectiva PL, a Commit Chain é administrada pelo BACEN e instalada em seu ambiente. 
 
-Para maiores informações sobre a infraestrutura topológica da Rayls e da Private Subnet, [clique aqui](./docs/arquitetura).
+Para maiores informações sobre a infraestrutura topológica da Rayls e da Private Subnet, [clique aqui](./docs/arquitetura.md).
 
 <br/>
 <br/>
@@ -61,7 +61,7 @@ Antes de irmos à experimentação com os exemplos, vejamos algumas informaçõe
     - Cada Participante terá uma wallet (conta) para clientes;
     - Resource Id: essa informação é dada pelo operador da Private Subnet e corresponde a um identificador único para cada ativo que circula na rede;
 - Onde encontrar os endereços dos contratos: no momento do setup, imprime-se no console o endereço dos contratos deployados.
-- Averiguação de privacidade: para tanto, acessar o ["How To"]((./privacy/how-to.md)).
+- Averiguação de privacidade: para tanto, acessar o ["How To"](./privacy/how-to.md).
 - Para consultar seus saldos, basta executar o exemplo [opcional_consultar-saldos.ts](./exemplos/opcional_consultar-saldos.ts).
 
 <br/>
@@ -130,9 +130,9 @@ O exemplo desta seção corresponde às ações que podem ser realizadas e que e
 
 - Scripts de liquidação da operação:
 
-    - F) [ex9-dvp-if-resgate-comprador.ts](./exemplos/ex9-dvp-if-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>comprador</strong>; 
+    - F) [ex9-dvp-if-liquidacao-comprador.ts](./exemplos/ex9-dvp-if-liquidacao-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>comprador</strong>; 
 
-    - F) [ex10-dvp-if-resgate-vendedor.ts](./exemplos/ex10-dvp-if-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>vendedor</strong>; 
+    - F) [ex10-dvp-if-liquidacao-vendedor.ts](./exemplos/ex10-dvp-if-liquidacao-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>vendedor</strong>; 
 
     - Obs.: a ordem de quem liquida primeiro não importa.
 
@@ -164,9 +164,9 @@ Scripts de registro da operação:
 
 Scripts de liquidação da operação:
 
-- I) [ex14-dvp-cliente-resgate-vendedor.ts](./exemplos/ex14-dvp-cliente-resgate-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre clientes de instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>vendedor</strong>;
+- I) [ex14-dvp-cliente-liquidacao-vendedor.ts](./exemplos/ex14-dvp-cliente-liquidacao-vendedor.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto vendedor do ativo (entre clientes de instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>vendedor</strong>;
 
-- I) [ex15-dvp-cliente-resgate-comprador.ts](./exemplos/ex15-dvp-cliente-resgate-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre clientes de instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>comprador</strong>;
+- I) [ex15-dvp-cliente-liquidacao-comprador.ts](./exemplos/ex15-dvp-cliente-liquidacao-comprador.ts): realiza o resgate de uma operação de DVP com Título Público Federal Tokenizado enquanto comprador do ativo (entre clientes de instituições financeiras) - esse script deve ser executado tão e somente pelo <strong>comprador</strong>;
 
 - Obs.: a ordem de quem liquida primeiro não importa.
 
