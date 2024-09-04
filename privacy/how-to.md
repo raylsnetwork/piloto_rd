@@ -42,7 +42,7 @@ Tomando por base o exemplo [ex1-requisitar-emissao-cbdc.ts](../exemplos/ex1-requ
 Antes de mais nada, seguindo o passo a passo recém apresentado, iniciaremos pela etapa (1), preenchendo o arquivo `config.json` com as informações necessárias:
 
 <p align="center">
-    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/3-config.json"></a>
+    <img src="https://public-professional-services.s3.eu-west-2.amazonaws.com/3-config.json.png"></a>
     <p align="center">
         <span>Etapa 1 - preenchendo o arquivo config.json</span>
     </p>
