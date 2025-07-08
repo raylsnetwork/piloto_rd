@@ -21,5 +21,9 @@ Com o .env devidamente preenchido...
 
 ### 3) STR0008, execute em ordem (precisa ter certeza de que o CDBC existe nos Rayls Nodes envolvidos): 
 
- - `npx hardhat run setup/setup-participant-rt.ts --network rayls`, para garantir o access control
+ - `npx hardhat run setup/setup-participant-rt.ts --network rayls`, para garantir o access control (execute apenas antes do primeiro STR0008 - uma única vez)
  - `npx hardhat run exemplos/ex3-transferir-realtokenizado-varejo-swap.ts --network rayls` 
+ 
+### 4) Opcional utilitário - para consultar saldos, execute: 
+
+ - `npx hardhat run exemplos/opcional_consultar-saldos.ts --network rayls`
