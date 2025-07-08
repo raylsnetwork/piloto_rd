@@ -1,21 +1,26 @@
 import { ethers } from "hardhat";
 import EndpointV1 from "../abi/EndpointV1.json";
-
 import STRABI from "../abi/STR.json";
 import STRBytecode from "../bytecode/STR.json";
-
 import RealDigitalSwapABI from "../abi/RealDigitalSwap.json";
 import RealDigitalSwapBytecode from "../bytecode/RealDigitalSwap.json";
-
 import RealTokenizadoABI from "../abi/RealTokenizado.json";
 import RealTokenizadoBytecode from "../bytecode/RealTokenizado.json";
+import { getPLInformation } from "../utils/utils";
 
 async function main() {
   const [signerIf] = await ethers.getSigners();
 
   const endpointAddrIf = process.env.ENDPOINT_ADDR ?? "";
   const chainIdBacen = process.env.CHAINID_BACEN ?? "";
-  const resourceIdCBDC = process.env.RESOURCEID_CBDC ?? "";
+
+  const {
+    cbdcResourceId,
+    strResourceId,
+    wdResourceId,
+    rtResourceId,
+    swapResourceId
+  } = await getPLInformation();
 
   const endpointIf = new ethers.Contract(
     endpointAddrIf,
@@ -23,13 +28,8 @@ async function main() {
     signerIf
   );
 
-  const defaultWalletResId = ethers.id("WalletDefault");
-  const rtResourceId = ethers.id("RealTokenizado");
-  const swapResourceId = ethers.id("RealDigitalSwap");
-  const strResId = ethers.id("STR" + (process.env.ENV_VERSION ?? ""));
-
   console.log("[DEBUG] Registrando Wallet Default...");
-  await (await endpointIf.registerResourceId(defaultWalletResId, signerIf.address)).wait();
+  await (await endpointIf.registerResourceId(wdResourceId, signerIf.address)).wait();
 
   console.log("[DEBUG] Deploy STR...");
   const strFactory = new ethers.ContractFactory(
@@ -40,12 +40,12 @@ async function main() {
   const str = await strFactory.deploy(
     endpointAddrIf,
     chainIdBacen,
-    resourceIdCBDC,
-    defaultWalletResId
+    cbdcResourceId,
+    wdResourceId
   );
   await str.waitForDeployment();
   console.log("[DEBUG] STR em:", str.target);
-  await (await endpointIf.registerResourceId(strResId, str.target)).wait();
+  await (await endpointIf.registerResourceId(strResourceId, str.target)).wait();
 
   console.log("[DEBUG] Deploy RealDigitalSwap...");
   const swapFactory = new ethers.ContractFactory(
@@ -55,10 +55,10 @@ async function main() {
   );
   const swap = await swapFactory.deploy(
     endpointAddrIf,
-    resourceIdCBDC,
+    cbdcResourceId,
     rtResourceId,
     swapResourceId,
-    defaultWalletResId
+    wdResourceId
   );
   await swap.waitForDeployment();
   console.log("[DEBUG] RealDigitalSwap em:", swap.target);

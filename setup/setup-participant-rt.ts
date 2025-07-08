@@ -1,27 +1,30 @@
 import { ethers } from "hardhat";
 import EndpointV1 from "../abi/EndpointV1.json";
 import RealTokenizadoABI from "../abi/RealTokenizado.json";
+import { getPLInformation } from "../utils/utils";
 
 async function main() {
   const [signerIf] = await ethers.getSigners();
 
-    const endpointAddrIf = process.env.ENDPOINT_ADDR ?? "";
-    const resourceIdCBDC = process.env.RESOURCEID_CBDC ?? "";
-    const resourceIdRT = ethers.id("RealTokenizado");
-    const resourceIdSwap = ethers.id("RealDigitalSwap");
+    const { 
+        endpointContractAddr, 
+        cbdcResourceId,
+        rtResourceId,
+        swapResourceId
+      } = await getPLInformation();
 
     const MINTER_ROLE = ethers.id("MINTER_ROLE");
     const BURNER_ROLE = ethers.id("BURNER_ROLE");
 
     const endpointIf = new ethers.Contract(
-        endpointAddrIf,
+        endpointContractAddr,
         EndpointV1,
         signerIf
     );
 
-    const cbdcAddr = await endpointIf.resourceIdToContractAddress(resourceIdCBDC);
-    const realTokenizadoAddr = await endpointIf.resourceIdToContractAddress(resourceIdRT);
-    const swapAddr = await endpointIf.resourceIdToContractAddress(resourceIdSwap);
+    const cbdcAddr = await endpointIf.resourceIdToContractAddress(cbdcResourceId);
+    const realTokenizadoAddr = await endpointIf.resourceIdToContractAddress(rtResourceId);
+    const swapAddr = await endpointIf.resourceIdToContractAddress(swapResourceId);
 
     const RTContract = new ethers.Contract(
         realTokenizadoAddr,

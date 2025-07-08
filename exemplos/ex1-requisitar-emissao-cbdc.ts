@@ -10,7 +10,12 @@ import IEndpointABI from "../abi/EndpointV1.json";
 import StrABI from "../abi/STR.json";
 
 async function example1() {
-  const { endpointContractAddr, cbdcResourceId } = await getPLInformation();
+  const { 
+    endpointContractAddr, 
+    cbdcResourceId,
+    strResourceId,
+    wdResourceId
+  } = await getPLInformation();
 
   const [deployerSigner] = await ethers.getSigners();
 
@@ -21,9 +26,7 @@ async function example1() {
     endpointContractAddr,
     deployerSigner
   );
-  const walletDefault = await endpointContract.resourceIdToContractAddress(
-    ethers.id("WalletDefault")
-  );
+  const walletDefault = await endpointContract.getAddressByResourceId(wdResourceId);
 
   console.log("[DEBUG] Checking balance before...");
   let balanceBefore =
@@ -35,9 +38,7 @@ async function example1() {
     )) ?? BigInt(0);
   console.log("[DEBUG] balanceBefore:", balanceBefore);
 
-  const strAddress = await endpointContract.resourceIdToContractAddress(
-    ethers.id("STR")
-  );
+  const strAddress = await endpointContract.getAddressByResourceId(strResourceId);
   const strContract = await ethers.getContractAt(
     StrABI,
     strAddress,

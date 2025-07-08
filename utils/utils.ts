@@ -36,6 +36,7 @@ export async function getPLInformation() {
         strResourceId,
         wdResourceId,
         rtResourceId,
+        swapResourceId,
         dvpContractAddr
     }
 }
