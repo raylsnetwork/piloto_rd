@@ -22,9 +22,9 @@ async function main() {
         signerIf
     );
 
-    const cbdcAddr = await endpointIf.resourceIdToContractAddress(cbdcResourceId);
-    const realTokenizadoAddr = await endpointIf.resourceIdToContractAddress(rtResourceId);
-    const swapAddr = await endpointIf.resourceIdToContractAddress(swapResourceId);
+    const cbdcAddr = await endpointIf.getAddressByResourceId(cbdcResourceId);
+    const realTokenizadoAddr = await endpointIf.getAddressByResourceId(rtResourceId);
+    const swapAddr = await endpointIf.getAddressByResourceId(swapResourceId);
 
     const RTContract = new ethers.Contract(
         realTokenizadoAddr,

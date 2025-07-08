@@ -16,7 +16,7 @@ async function AllowListAddition() {
         endpointContractAddr, 
         deployerSigner
     );
-    const cbdcContractAddr = await endpointContract.resourceIdToContractAddress(
+    const cbdcContractAddr = await endpointContract.getAddressByResourceId(
         cbdcResourceId
     );
     const cbdcContract = await ethers.getContractAt(

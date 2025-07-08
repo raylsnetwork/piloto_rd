@@ -42,7 +42,7 @@ export async function getPLInformation() {
 }
 
 export async function getBalanceRTSync(endpointContract: any, resourceId: string | undefined, signer: any, walletBalance: string) {
-    const addressRT = await endpointContract.resourceIdToContractAddress(resourceId ?? "");
+    const addressRT = await endpointContract.getAddressByResourceId(resourceId ?? "");
     if (addressRT === ethers.ZeroAddress){
         return undefined;
     }
@@ -52,7 +52,7 @@ export async function getBalanceRTSync(endpointContract: any, resourceId: string
 }
 
 export async function getBalanceCBDCSync(endpointContract: any, resourceId: string | undefined, signer: any, walletBalance: string) {
-    const addressCBDC = await endpointContract.resourceIdToContractAddress(resourceId ?? "");
+    const addressCBDC = await endpointContract.getAddressByResourceId(resourceId ?? "");
     if (addressCBDC === ethers.ZeroAddress){
         return undefined;
     }

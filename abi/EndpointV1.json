@@ -1323,7 +1323,7 @@
           "type": "bytes32"
         }
       ],
-      "name": "resourceIdToContractAddress",
+      "name": "getAddressByResourceId",
       "outputs": [
         {
           "internalType": "address",

@@ -61,15 +61,15 @@ async function getBalances() {
     console.log("[DEBUG] RealTokenizado client account balance:", balanceRtClient);
     console.log("");
 
-    const strAddr = await endpointContract.resourceIdToContractAddress(
+    const strAddr = await endpointContract.getAddressByResourceId(
       strResourceId
     );
 
-    const cbdcAddr = await endpointContract.resourceIdToContractAddress(
+    const cbdcAddr = await endpointContract.getAddressByResourceId(
       cbdcResourceId
     );
 
-    const realTokenizadoAddr = await endpointContract.resourceIdToContractAddress(
+    const realTokenizadoAddr = await endpointContract.getAddressByResourceId(
       rtResourceId
     );
 
