@@ -1,0 +1,1693 @@
+[
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "target",
+          "type": "address"
+        }
+      ],
+      "name": "AddressEmptyCode",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "implementation",
+          "type": "address"
+        }
+      ],
+      "name": "ERC1967InvalidImplementation",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ERC1967NonPayable",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "FailedCall",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidInitialization",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotInitializing",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableInvalidOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableUnauthorizedAccount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "UUPSUnauthorizedCallContext",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "slot",
+          "type": "bytes32"
+        }
+      ],
+      "name": "UUPSUnsupportedProxiableUUID",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "version",
+          "type": "uint64"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "batchId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "toChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "internalType": "bool",
+                      "name": "valid",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "nonce",
+                      "type": "uint256"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "bool",
+                          "name": "valid",
+                          "type": "bool"
+                        },
+                        {
+                          "internalType": "enum ResourceDeployType",
+                          "name": "resourceDeployType",
+                          "type": "uint8"
+                        },
+                        {
+                          "internalType": "bytes",
+                          "name": "bytecode",
+                          "type": "bytes"
+                        },
+                        {
+                          "internalType": "enum RaylsBridgeableERC",
+                          "name": "factoryTemplate",
+                          "type": "uint8"
+                        },
+                        {
+                          "internalType": "bytes",
+                          "name": "initializerParams",
+                          "type": "bytes"
+                        }
+                      ],
+                      "internalType": "struct NewResourceMetadata",
+                      "name": "newResourceMetadata",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "resourceId",
+                      "type": "bytes32"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "lockData",
+                      "type": "bytes"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "revertPayloadDataSender",
+                      "type": "bytes"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "revertPayloadDataReceiver",
+                      "type": "bytes"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "enum RaylsBridgeableERC",
+                          "name": "assetType",
+                          "type": "uint8"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "id",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "address",
+                          "name": "from",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "address",
+                          "name": "to",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "address",
+                          "name": "tokenAddress",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "amount",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct BridgedTransferMetadata",
+                      "name": "transferMetadata",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "ignoresNonce",
+                      "type": "bool"
+                    }
+                  ],
+                  "internalType": "struct RaylsMessageMetadata",
+                  "name": "messageMetadata",
+                  "type": "tuple"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "payload",
+                  "type": "bytes"
+                }
+              ],
+              "internalType": "struct RaylsMessage",
+              "name": "data",
+              "type": "tuple"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "messageId",
+              "type": "bytes32"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct BatchMessage[]",
+          "name": "messages",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "MessageBatchDispatched",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "messageId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "toChainId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "valid",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "nonce",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "bool",
+                      "name": "valid",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "enum ResourceDeployType",
+                      "name": "resourceDeployType",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "bytecode",
+                      "type": "bytes"
+                    },
+                    {
+                      "internalType": "enum RaylsBridgeableERC",
+                      "name": "factoryTemplate",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "initializerParams",
+                      "type": "bytes"
+                    }
+                  ],
+                  "internalType": "struct NewResourceMetadata",
+                  "name": "newResourceMetadata",
+                  "type": "tuple"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "resourceId",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "lockData",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "revertPayloadDataSender",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "revertPayloadDataReceiver",
+                  "type": "bytes"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "enum RaylsBridgeableERC",
+                      "name": "assetType",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "id",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "from",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "to",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "tokenAddress",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "amount",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct BridgedTransferMetadata",
+                  "name": "transferMetadata",
+                  "type": "tuple"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "ignoresNonce",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct RaylsMessageMetadata",
+              "name": "messageMetadata",
+              "type": "tuple"
+            },
+            {
+              "internalType": "bytes",
+              "name": "payload",
+              "type": "bytes"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct RaylsMessage",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "MessageDispatched",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "UpdateDHKeysRequest",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "implementation",
+          "type": "address"
+        }
+      ],
+      "name": "Upgraded",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "UPGRADE_INTERFACE_VERSION",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "chainId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "name": "commitChainAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "commitChainId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_messageExecutor",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_contractFactory",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_participantStorageReplica",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_tokenRegistryReplica",
+          "type": "address"
+        }
+      ],
+      "name": "configureContracts",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "contractVersion",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "messageId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "toChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "valid",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "nonce",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "bool",
+                      "name": "valid",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "enum ResourceDeployType",
+                      "name": "resourceDeployType",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "bytecode",
+                      "type": "bytes"
+                    },
+                    {
+                      "internalType": "enum RaylsBridgeableERC",
+                      "name": "factoryTemplate",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "initializerParams",
+                      "type": "bytes"
+                    }
+                  ],
+                  "internalType": "struct NewResourceMetadata",
+                  "name": "newResourceMetadata",
+                  "type": "tuple"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "resourceId",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "lockData",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "revertPayloadDataSender",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "revertPayloadDataReceiver",
+                  "type": "bytes"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "enum RaylsBridgeableERC",
+                      "name": "assetType",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "id",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "from",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "to",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "tokenAddress",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "amount",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct BridgedTransferMetadata",
+                  "name": "transferMetadata",
+                  "type": "tuple"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "ignoresNonce",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct RaylsMessageMetadata",
+              "name": "messageMetadata",
+              "type": "tuple"
+            },
+            {
+              "internalType": "bytes",
+              "name": "payload",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct RaylsMessage",
+          "name": "data",
+          "type": "tuple"
+        }
+      ],
+      "name": "dispatchMessage",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "batchId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "toChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "internalType": "bool",
+                      "name": "valid",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "nonce",
+                      "type": "uint256"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "bool",
+                          "name": "valid",
+                          "type": "bool"
+                        },
+                        {
+                          "internalType": "enum ResourceDeployType",
+                          "name": "resourceDeployType",
+                          "type": "uint8"
+                        },
+                        {
+                          "internalType": "bytes",
+                          "name": "bytecode",
+                          "type": "bytes"
+                        },
+                        {
+                          "internalType": "enum RaylsBridgeableERC",
+                          "name": "factoryTemplate",
+                          "type": "uint8"
+                        },
+                        {
+                          "internalType": "bytes",
+                          "name": "initializerParams",
+                          "type": "bytes"
+                        }
+                      ],
+                      "internalType": "struct NewResourceMetadata",
+                      "name": "newResourceMetadata",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "resourceId",
+                      "type": "bytes32"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "lockData",
+                      "type": "bytes"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "revertPayloadDataSender",
+                      "type": "bytes"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "revertPayloadDataReceiver",
+                      "type": "bytes"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "enum RaylsBridgeableERC",
+                          "name": "assetType",
+                          "type": "uint8"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "id",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "address",
+                          "name": "from",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "address",
+                          "name": "to",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "address",
+                          "name": "tokenAddress",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "amount",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct BridgedTransferMetadata",
+                      "name": "transferMetadata",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "ignoresNonce",
+                      "type": "bool"
+                    }
+                  ],
+                  "internalType": "struct RaylsMessageMetadata",
+                  "name": "messageMetadata",
+                  "type": "tuple"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "payload",
+                  "type": "bytes"
+                }
+              ],
+              "internalType": "struct RaylsMessage",
+              "name": "data",
+              "type": "tuple"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "messageId",
+              "type": "bytes32"
+            }
+          ],
+          "internalType": "struct BatchMessage[]",
+          "name": "messages",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "dispatchMessageBatch",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_resourceId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getAddressByResourceId",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getChainId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_contractName",
+          "type": "string"
+        }
+      ],
+      "name": "getCommitChainAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCommitChainId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_srcChainId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getInboundNonce",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMaxBatchMessages",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_dstChainId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getOutboundNonce",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "inboundNonce",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "initialOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_chainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_commitChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_maxBatchMessages",
+          "type": "uint256"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_executor",
+          "type": "address"
+        }
+      ],
+      "name": "isTrustedExecutor",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "outboundNonce",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "proxiableUUID",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_srcChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_srcAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_dstAddress",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "valid",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "nonce",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "bool",
+                      "name": "valid",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "enum ResourceDeployType",
+                      "name": "resourceDeployType",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "bytecode",
+                      "type": "bytes"
+                    },
+                    {
+                      "internalType": "enum RaylsBridgeableERC",
+                      "name": "factoryTemplate",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "bytes",
+                      "name": "initializerParams",
+                      "type": "bytes"
+                    }
+                  ],
+                  "internalType": "struct NewResourceMetadata",
+                  "name": "newResourceMetadata",
+                  "type": "tuple"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "resourceId",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "lockData",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "revertPayloadDataSender",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "revertPayloadDataReceiver",
+                  "type": "bytes"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "enum RaylsBridgeableERC",
+                      "name": "assetType",
+                      "type": "uint8"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "id",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "from",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "to",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "tokenAddress",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "amount",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct BridgedTransferMetadata",
+                  "name": "transferMetadata",
+                  "type": "tuple"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "ignoresNonce",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct RaylsMessageMetadata",
+              "name": "messageMetadata",
+              "type": "tuple"
+            },
+            {
+              "internalType": "bytes",
+              "name": "payload",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct RaylsMessage",
+          "name": "_raylsMessage",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "_messageId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "receivePayload",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_contractName",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "_contractAddressOnCommitChain",
+          "type": "address"
+        }
+      ],
+      "name": "registerCommitChainAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "_resourceId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "_implementationAddress",
+          "type": "address"
+        }
+      ],
+      "name": "registerResourceId",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "requestNewDHKeys",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "resourceIdToContractAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_dstChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_destination",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_payload",
+          "type": "bytes"
+        }
+      ],
+      "name": "send",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "messageId",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "_dstChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "_destination",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_payload",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct DestinationPayloadRequest[]",
+          "name": "_destinationPayloadRequests",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "sendBatch",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "batchId",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "_dstChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "_resourceId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_payload",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_lockData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_revertDataSender",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_revertDataReceiver",
+              "type": "bytes"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "enum RaylsBridgeableERC",
+                  "name": "assetType",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "id",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "from",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "tokenAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct BridgedTransferMetadata",
+              "name": "transferMetadata",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct ResourceIdCompletePayloadRequest[]",
+          "name": "_resourceIdPayloadRequests",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "sendBatchToResourceId",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "batchId",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "_dstChainId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "_resourceId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_payload",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct ResourceIdPayloadRequest[]",
+          "name": "_resourceIdPayloadRequests",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "sendBatchToResourceId",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "batchId",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_dstChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "_resourceId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_payload",
+          "type": "bytes"
+        }
+      ],
+      "name": "sendToResourceId",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "messageId",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_dstChainId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "_resourceId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_payload",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_lockData",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_revertDataSender",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_revertDataReceiver",
+          "type": "bytes"
+        },
+        {
+          "components": [
+            {
+              "internalType": "enum RaylsBridgeableERC",
+              "name": "assetType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "tokenAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct BridgedTransferMetadata",
+          "name": "transferMetadata",
+          "type": "tuple"
+        }
+      ],
+      "name": "sendToResourceId",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "messageId",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_maxBatchMessages",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMaxBatchMessages",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newImplementation",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "upgradeToAndCall",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "version",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ]
