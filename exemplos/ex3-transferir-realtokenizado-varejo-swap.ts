@@ -5,21 +5,22 @@ import {
   getPLInformation
 } from "../utils/utils";
 import IendpointContractABI from "../abi/EndpointV1.json";
-import CbdcABI from "../abi/CBDC.json";
 import RealTokenizadoABI from "../abi/RealTokenizado.json";
-import { Log } from "ethers";
+import RealDigitalSwapABI from "../abi/RealDigitalSwap.json";
 
 async function example4() {
   const {
     endpointContractAddr,
     cbdcResourceId,
     wdResourceId,
-    rtResourceId
+    rtResourceId,
+    swapResourceId
   } = await getPLInformation();
 
   const [deployerSigner, clientSigner] = await ethers.getSigners();
 
   const chainIdDestination = Number(process.env.DEST_CHAINID ?? 0);
+  const destWdAcc = process.env.DEST_RESERVES_ACC ?? "";
   const destClientAcc = process.env.DEST_CLIENT_ACC ?? "";
 
   const amountToMintAndSwap = ethers.parseUnits("10", 2);
@@ -36,8 +37,8 @@ async function example4() {
   const realTokenizadoAddr = await endpointContract.getAddressByResourceId(
     rtResourceId
   );
-  const cbdcContractAddr = await endpointContract.getAddressByResourceId(
-    cbdcResourceId
+  const swapContractAddr = await endpointContract.getAddressByResourceId(
+    swapResourceId
   );
 
   const realTokenizadoContract = new ethers.Contract(
@@ -51,12 +52,6 @@ async function example4() {
     amountToMintAndSwap
   );
   await txMint.wait();
-
-  const cbdcContract = new ethers.Contract(
-    cbdcContractAddr,
-    CbdcABI,
-    clientSigner
-  );
 
   const balanceRTBefore =
     (await getBalanceRTSync(
@@ -76,20 +71,26 @@ async function example4() {
     )) ?? BigInt(0);
   console.log("[DEBUG] balanceCDBCBefore:", balanceCDBCBefore);
 
+  const swapContract = new ethers.Contract(
+    swapContractAddr,
+    RealDigitalSwapABI,
+    clientSigner
+  );
+
   console.log(
     "[DEBUG] Approving RealTokenizado amount for CBDC contract address..."
   );
   const txApproveRT = await realTokenizadoContract
     .connect(clientSigner)
-    .approve(cbdcContractAddr, amountToMintAndSwap);
+    .approve(swapContractAddr, amountToMintAndSwap);
   await txApproveRT.wait();
 
   console.log("[DEBUG] swap ...");
-  const txSwap = await cbdcContract.swap(
-    chainIdDestination,
-    cbdcResourceId,
+  const txSwap = await swapContract.swap(
+    destWdAcc,
     destClientAcc,
-    amountToMintAndSwap
+    amountToMintAndSwap,
+    chainIdDestination
   );
   await txSwap.wait();
 
