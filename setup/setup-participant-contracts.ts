@@ -1,119 +1,87 @@
 import { ethers } from "hardhat";
+import EndpointV1 from "../abi/EndpointV1.json";
 
-import IEndpointABI from "../abi/IEndpoint.json";
-import StrABI from "../abi/STR.json";
+import STRABI from "../abi/STR.json";
+import STRBytecode from "../bytecode/STR.json";
+
+import RealDigitalSwapABI from "../abi/RealDigitalSwap.json";
+import RealDigitalSwapBytecode from "../bytecode/RealDigitalSwap.json";
+
 import RealTokenizadoABI from "../abi/RealTokenizado.json";
-import TPFTopABI from "../abi/TPFToperation.json";
-
-import StrBytecode from "../bytecode/STR.json";
 import RealTokenizadoBytecode from "../bytecode/RealTokenizado.json";
-import TPFTopBytecode from "../bytecode/TPFToperation.json";
 
 async function main() {
-    const endpointAddr = process.env.ENDPOINT_ADDR ?? "";
-    const chainIdBacen = process.env.CHAINID_BACEN ?? "";
-    const chainIdSelic = process.env.CHAINID_SELIC ?? "";
-    const cbdcResourceId = process.env.RESOURCEID_CBDC ?? "";
-    const tpftResourceId = process.env.RESOURCEID_TPFT ?? "";
-    const dvpAddress = process.env.DVP_CLAIM_ADDRESS ?? "";
+  const [signerIf] = await ethers.getSigners();
 
-    const [deployerSigner] = await ethers.getSigners();
+  const endpointAddrIf = process.env.ENDPOINT_ADDR ?? "";
+  const chainIdBacen = process.env.CHAINID_BACEN ?? "";
+  const resourceIdCBDC = process.env.RESOURCEID_CBDC ?? "";
 
-    const strResourceId = ethers.id("STR");
-    const wdResourceId = ethers.id("WalletDefault");
-    const rtResourceId = ethers.id("RealTokenizado");
-    const dvpResourceId = ethers.id("DVP");
-    const tpftOpResourceId = ethers.id("TPFToperation");
+  const endpointIf = new ethers.Contract(
+    endpointAddrIf,
+    EndpointV1,
+    signerIf
+  );
 
-    // Instanciando IEndpoint para registrar os Resource Ids relevantes
-    const endpointIf = await ethers.getContractAt(
-        IEndpointABI, 
-        endpointAddr,
-        deployerSigner
-    );
+  const defaultWalletResId = ethers.id("WalletDefault");
+  const rtResourceId = ethers.id("RealTokenizado");
+  const swapResourceId = ethers.id("RealDigitalSwap");
+  const strResId = ethers.id("STR" + (process.env.ENV_VERSION ?? ""));
 
-    // Registrando Wallet Default
-    console.log("[DEBUG] Registering Wallet Default's Resource Id...");
-    const txRegWD = await endpointIf.registerResourceId(
-        wdResourceId, 
-        deployerSigner.address
-    );
-    await txRegWD.wait();
-    console.log(
-        `[DEBUG] Wallet Default registered to Resource Id '${wdResourceId}' with address '${deployerSigner.address}'.`
-    );
+  console.log("[DEBUG] Registrando Wallet Default...");
+  await (await endpointIf.registerResourceId(defaultWalletResId, signerIf.address)).wait();
 
-    // Deploy e registro do contrato STR
-    console.log("[DEBUG] Deploying and registering STR contract ...");
-    const strContractFactory = new ethers.ContractFactory(
-        StrABI, 
-        StrBytecode, 
-        deployerSigner
-    );
-    const strContract = await strContractFactory.deploy(
-        endpointAddr,
-        chainIdBacen,
-        cbdcResourceId,
-        wdResourceId
-    )
-    await strContract.waitForDeployment();
-    const txRegSTR = await endpointIf.registerResourceId(
-        strResourceId, 
-        strContract.target
-    );
-    await txRegSTR.wait();
-    console.log(`
-        [DEBUG] STR deployed and registered to Resource Id '${strResourceId}' with address '${strContract.target}'.`
-    );
+  console.log("[DEBUG] Deploy STR...");
+  const strFactory = new ethers.ContractFactory(
+    STRABI,
+    STRBytecode,
+    signerIf
+  );
+  const str = await strFactory.deploy(
+    endpointAddrIf,
+    chainIdBacen,
+    resourceIdCBDC,
+    defaultWalletResId
+  );
+  await str.waitForDeployment();
+  console.log("[DEBUG] STR em:", str.target);
+  await (await endpointIf.registerResourceId(strResId, str.target)).wait();
 
-    // Deploy e registro do contrato RealTokenizado
-    console.log("[DEBUG] Deploying and registering RealTokenizado contract ...");
-    const rtContractFactory = new ethers.ContractFactory(
-        RealTokenizadoABI, 
-        RealTokenizadoBytecode, 
-        deployerSigner
-    );
-    const rtContract = await rtContractFactory.deploy("RealTokenizado", "R$");
-    await rtContract.waitForDeployment();
-    const txRegRT = await endpointIf.registerResourceId(
-        rtResourceId, 
-        rtContract.target
-    );
-    await txRegRT.wait();
-    console.log(`
-        [DEBUG] RealTokenizado deployed and registered to Resource Id '${rtResourceId}' with address '${rtContract.target}'.`
-    );
+  console.log("[DEBUG] Deploy RealDigitalSwap...");
+  const swapFactory = new ethers.ContractFactory(
+    RealDigitalSwapABI,
+    RealDigitalSwapBytecode,
+    signerIf
+  );
+  const swap = await swapFactory.deploy(
+    endpointAddrIf,
+    resourceIdCBDC,
+    rtResourceId,
+    swapResourceId,
+    defaultWalletResId
+  );
+  await swap.waitForDeployment();
+  console.log("[DEBUG] RealDigitalSwap em:", swap.target);
+  await (await endpointIf.registerResourceId(swapResourceId, swap.target)).wait();
 
-    // Deploy e registro do contrato DVP
-    console.log("[DEBUG] Deploying and registering TPFToperation contract ...");
-    const tpftOpContractFactory = new ethers.ContractFactory(
-        TPFTopABI, 
-        TPFTopBytecode, 
-        deployerSigner
-    );
-    const tpftOpContract = await tpftOpContractFactory.deploy(
-        endpointAddr, 
-        chainIdSelic,
-        cbdcResourceId,
-        tpftResourceId,
-        dvpResourceId,
-        rtResourceId,
-        dvpAddress
-    )
-    await tpftOpContract.waitForDeployment();
-    const txRegOpClaim = await endpointIf.registerResourceId(
-        tpftOpResourceId, 
-        tpftOpContract.target
-    );
-    await txRegOpClaim.wait();
-    console.log(`
-        [DEBUG] TPFToperation deployed and registered to Resource Id '${tpftOpResourceId}' with address '${tpftOpContract.target}'.`
-    );
+  console.log("[DEBUG] Deploy RealTokenizado...");
+  const rtFactory = new ethers.ContractFactory(
+    RealTokenizadoABI,
+    RealTokenizadoBytecode,
+    signerIf
+  );
+  const rt = await rtFactory.deploy(
+    "RealTokenizado",
+    "R$"
+  );
+  await rt.waitForDeployment();
+  console.log("[DEBUG] RealTokenizado em:", rt.target);
+  await (await endpointIf.registerResourceId(rtResourceId, rt.target)).wait();
 }
 
 main()
-    .then(() => process.exit(0))
-    .catch(error => {
-        console.error(error);
-        process.exit(1);
-    });
+  .then(() => process.exit(0))
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });

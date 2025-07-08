@@ -1,52 +1,49 @@
 import { ethers } from "hardhat";
-import IendpointContractABI from "../abi/IEndpoint.json";
+import EndpointV1 from "../abi/EndpointV1.json";
 import RealTokenizadoABI from "../abi/RealTokenizado.json";
 
-
 async function main() {
+  const [signerIf] = await ethers.getSigners();
 
-    const endpointAddr = process.env.ENDPOINT_ADDR ?? "";
+    const endpointAddrIf = process.env.ENDPOINT_ADDR ?? "";
     const resourceIdCBDC = process.env.RESOURCEID_CBDC ?? "";
-    const resourceIdRT = ethers.id("RealTokenizado")
-
-    
-    const [deployerSigner] = await ethers.getSigners();
+    const resourceIdRT = ethers.id("RealTokenizado");
+    const resourceIdSwap = ethers.id("RealDigitalSwap");
 
     const MINTER_ROLE = ethers.id("MINTER_ROLE");
     const BURNER_ROLE = ethers.id("BURNER_ROLE");
 
-    const endpointContract = await ethers.getContractAt(
-        IendpointContractABI, 
-        endpointAddr, 
-        deployerSigner
+    const endpointIf = new ethers.Contract(
+        endpointAddrIf,
+        EndpointV1,
+        signerIf
     );
 
-    const cbdcAddr = await endpointContract.resourceIdToContractAddress(
-        resourceIdCBDC
+    const cbdcAddr = await endpointIf.resourceIdToContractAddress(resourceIdCBDC);
+    const realTokenizadoAddr = await endpointIf.resourceIdToContractAddress(resourceIdRT);
+    const swapAddr = await endpointIf.resourceIdToContractAddress(resourceIdSwap);
+
+    const RTContract = new ethers.Contract(
+        realTokenizadoAddr,
+        RealTokenizadoABI,
+        signerIf
     );
 
-    const realTokenizadoAddr = await endpointContract.resourceIdToContractAddress(
-        resourceIdRT
-    );
+    console.log("[DEBUG] Granting MINTER...");
+    await (await RTContract.grantRole(MINTER_ROLE, swapAddr)).wait();
+    console.log("  swapAddr:", swapAddr);
 
-    const RTContract = await ethers.getContractAt(
-        RealTokenizadoABI, 
-        realTokenizadoAddr, 
-        deployerSigner
-    );
+    await (await RTContract.grantRole(MINTER_ROLE, cbdcAddr)).wait();
+    console.log("  cbdcAddr:", cbdcAddr);
 
-    console.log("[DEBUG] Granting MINTER_ROLE & BURNER_ROLE to CBDC's address at RealTokenizado...");
-    const txGrantMinter = await RTContract.grantRole(MINTER_ROLE, cbdcAddr);
-    await txGrantMinter.wait();
-
-    const txGrantBurner = await RTContract.grantRole(BURNER_ROLE, cbdcAddr);
-    await txGrantBurner.wait();
-    console.log("[DEBUG] Done.");
+    console.log("[DEBUG] Granting BURNER...");
+    await (await RTContract.grantRole(BURNER_ROLE, cbdcAddr)).wait();
+    console.log("  cbdcAddr:", cbdcAddr);
 }
 
 main()
-    .then(() => process.exit(0))
-    .catch(error => {
-        console.error(error);
-        process.exit(1);
-    });
+  .then(() => process.exit(0))
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });

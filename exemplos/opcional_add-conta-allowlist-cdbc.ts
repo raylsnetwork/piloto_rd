@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 import { getPLInformation } from "../utils/utils";
-import IendpointContractABI from "../abi/IEndpoint.json";
+import IendpointContractABI from "../abi/EndpointV1.json";
 import CbdcABI from "../abi/CBDC.json";
 
 async function AllowListAddition() {

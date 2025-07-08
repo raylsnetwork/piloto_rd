@@ -3,9 +3,10 @@ import {
   getPLInformation,
   getBalanceCBDCSync,
   TimeoutExecution,
+  logWithReplacement,
 } from "../utils/utils";
 
-import IEndpointABI from "../abi/IEndpoint.json";
+import IEndpointABI from "../abi/EndpointV1.json";
 import StrABI from "../abi/STR.json";
 
 async function example1() {
@@ -44,10 +45,13 @@ async function example1() {
   );
 
   console.log("[DEBUG] Invoking requestToMint...");
-  const txRequestToMint = await strContract.requestToMint(amountRequested);
+  const txRequestToMint = await strContract.requestToMint(
+    [amountRequested]
+  );
   await txRequestToMint.wait();
   console.time("Wait balance update.");
   const balanceAfter = await TimeoutExecution(async (retry) => {
+    logWithReplacement(`[DEBUG] Waiting CBDC balance to be updated: ${retry}`)
     const balanceCBDC = await getBalanceCBDCSync(
       endpointContract,
       cbdcResourceId,
@@ -58,6 +62,7 @@ async function example1() {
       return [true, balanceCBDC];
     } else return [false, BigInt(0)];
   });
+  console.log();
   console.timeEnd("Wait balance update.");
   console.log("[DEBUG] balanceAfter:", balanceAfter);
 }

@@ -2,7 +2,6 @@ import { ethers } from "hardhat";
 
 import RealTokenizadoABI from "../abi/RealTokenizado.json";
 import CbdcABI from "../abi/CBDC.json";
-import TpftABI from "../abi/TPFt.json";
 
 export const timeoutToResolve = 120;
 
@@ -11,7 +10,6 @@ export const RT_SYMBOL: string = process.env.RT_SYMBOL ?? "";
 
 export async function getPLInformation() {
     const cbdcResourceId = process.env.RESOURCEID_CBDC ?? "";
-    const tpftResourceId = process.env.RESOURCEID_TPFT ?? "";
     const dvpContractAddr = process.env.DVP_CONTRACT_ADDR ?? "";
 
     const chainId = process.env.CHAINID ?? "";
@@ -26,8 +24,7 @@ export async function getPLInformation() {
     const strResourceId = ethers.id("STR");
     const wdResourceId = ethers.id("WalletDefault");
     const rtResourceId = ethers.id("RealTokenizado");
-    const dvpResourceId = ethers.id("DVP");
-    const tpftOpResourceId = ethers.id("TPFToperation");
+    const swapResourceId = ethers.id("RealDigitalSwap");
 
     return {
         chainId,
@@ -36,12 +33,9 @@ export async function getPLInformation() {
         clientSigner,
         endpointContractAddr,
         cbdcResourceId,
-        tpftResourceId,
         strResourceId,
         wdResourceId,
         rtResourceId,
-        dvpResourceId,
-        tpftOpResourceId,
         dvpContractAddr
     }
 }
@@ -66,22 +60,6 @@ export async function getBalanceCBDCSync(endpointContract: any, resourceId: stri
     return balance;
 }
 
-export async function getBalanceTPFTSync(endpointContract: any, resourceId: string | undefined, signer: any, walletBalance: string, tpftData: { acronym: string, code: string, maturityDate: number }) {
-    let tpftAddress = await endpointContract.resourceIdToContractAddress(resourceId ?? "");
-    let balanceTPFT = BigInt(0);
-    let tpftId = BigInt(0);
-    if (tpftAddress != ethers.ZeroAddress) {
-        const tpftContractB = await ethers.getContractAt(TpftABI, tpftAddress, signer);
-        tpftId = await tpftContractB.getTPFtId(
-            tpftData.acronym,
-            tpftData.code,
-            tpftData.maturityDate
-        );
-        balanceTPFT = tpftId != BigInt(0) ? await tpftContractB.balanceOf(walletBalance, tpftId) : BigInt(0);
-    }
-    return balanceTPFT;
-}
-
 export async function TimeoutExecution(execution: (retry:number) => Promise<[boolean, any]>) {
     return new Promise(resolve => {
         let retry = 0;
@@ -95,4 +73,9 @@ export async function TimeoutExecution(execution: (retry:number) => Promise<[boo
         }, 1000)
     });
 
+}
+
+export const logWithReplacement = (message: string) => {
+    process.stdout.write('\r');  // Move the cursor to the beginning of the line
+    process.stdout.write(message);
 }
