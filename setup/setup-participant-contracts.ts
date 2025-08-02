@@ -8,39 +8,57 @@ import RealTokenizadoABI from "../abi/RealTokenizado.json";
 import RealTokenizadoBytecode from "../bytecode/RealTokenizado.json";
 import { getPLInformation } from "../utils/utils";
 
+import TPFTopABI from "../abi/TPFToperation.json";
+import TPFTopBytecode from "../bytecode/TPFToperation.json";
+
 async function main() {
-  const [signerIf] = await ethers.getSigners();
 
   const endpointAddrIf = process.env.ENDPOINT_ADDR ?? "";
   const chainIdBacen = process.env.CHAINID_BACEN ?? "";
+  const chainIdSelic = process.env.CHAINID_SELIC ?? "";
 
   const {
     cbdcResourceId,
     strResourceId,
     wdResourceId,
     rtResourceId,
-    swapResourceId
+    swapResourceId,
+    dvpContractAddr,
+    tpftResourceId,
+    dvpResourceId,
+    tpftOpResourceId,
+    deployerSigner
   } = await getPLInformation();
 
   const endpointIf = new ethers.Contract(
     endpointAddrIf,
     EndpointV1,
-    signerIf
+    deployerSigner
   );
 
   console.log("[DEBUG] Registrando Wallet Default...");
-  await (await endpointIf.registerResourceId(wdResourceId, signerIf.address)).wait();
+  await (await endpointIf.registerResourceId(wdResourceId, deployerSigner.address)).wait();
 
   console.log("[DEBUG] Deploy STR...");
   const strFactory = new ethers.ContractFactory(
     STRABI,
     STRBytecode,
-    signerIf
+    deployerSigner
   );
+
+  console.log({
+    endpointAddrIf,
+    chainIdBacen,
+    cbdcResourceId,
+    strResourceId,
+    wdResourceId
+  })
+
   const str = await strFactory.deploy(
     endpointAddrIf,
     chainIdBacen,
     cbdcResourceId,
+    strResourceId,
     wdResourceId
   );
   await str.waitForDeployment();
@@ -51,7 +69,7 @@ async function main() {
   const swapFactory = new ethers.ContractFactory(
     RealDigitalSwapABI,
     RealDigitalSwapBytecode,
-    signerIf
+    deployerSigner
   );
   const swap = await swapFactory.deploy(
     endpointAddrIf,
@@ -68,7 +86,7 @@ async function main() {
   const rtFactory = new ethers.ContractFactory(
     RealTokenizadoABI,
     RealTokenizadoBytecode,
-    signerIf
+    deployerSigner
   );
   const rt = await rtFactory.deploy(
     "RealTokenizado",
@@ -77,6 +95,42 @@ async function main() {
   await rt.waitForDeployment();
   console.log("[DEBUG] RealTokenizado em:", rt.target);
   await (await endpointIf.registerResourceId(rtResourceId, rt.target)).wait();
+
+
+  // Deploy e registro do contrato DVP
+  console.log("[DEBUG] Deploying and registering TPFToperation contract ...");
+  const tpftOpContractFactory = new ethers.ContractFactory(
+      TPFTopABI, 
+      TPFTopBytecode, 
+      deployerSigner
+  );
+  console.log({
+    endpointAddrIf, 
+      chainIdSelic,
+      cbdcResourceId,
+      tpftResourceId,
+      dvpResourceId,
+      rtResourceId,
+      dvpContractAddr
+  });
+  const tpftOpContract = await tpftOpContractFactory.deploy(
+      endpointAddrIf, 
+      chainIdSelic,
+      cbdcResourceId,
+      tpftResourceId,
+      dvpResourceId,
+      rtResourceId,
+      dvpContractAddr
+  )
+  await tpftOpContract.waitForDeployment();
+  const txRegOpClaim = await endpointIf.registerResourceId(
+      tpftOpResourceId, 
+      tpftOpContract.target
+  );
+  await txRegOpClaim.wait();
+  console.log(`
+      [DEBUG] TPFToperation deployed and registered to Resource Id '${tpftOpResourceId}' with address '${tpftOpContract.target}'.`
+  );
 }
 
 main()

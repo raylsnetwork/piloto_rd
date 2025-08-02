@@ -18,10 +18,11 @@ async function example2() {
   const {
     endpointContractAddr,
     cbdcResourceId,
-    wdResourceId
+    wdResourceId,
+    deployerSigner
   } = await getPLInformation();
 
-  const [deployerSigner] = await ethers.getSigners();
+  //const [deployerSigner] = await ethers.getSigners();
 
   const chainIdDestination = Number(process.env.DEST_CHAINID ?? 0);
   const destinationWd = process.env.DEST_RESERVES_ACC ?? "";

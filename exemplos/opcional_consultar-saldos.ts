@@ -7,10 +7,12 @@ async function getBalances() {
         endpointContractAddr,
         cbdcResourceId,
         strResourceId,
-        rtResourceId
+        rtResourceId,
+        deployerSigner, 
+        clientSigner
     } = await getPLInformation();
-
-    const [reservesSigner, clientSigner] = await ethers.getSigners();
+    let reservesSigner = deployerSigner;
+    //const [reservesSigner, clientSigner] = await ethers.getSigners();
 
     const reservesAccAddr = reservesSigner.address;
     const clientAccAddr = clientSigner.address;

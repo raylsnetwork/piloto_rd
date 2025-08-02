@@ -2,6 +2,7 @@ import { ethers } from "hardhat";
 
 import RealTokenizadoABI from "../abi/RealTokenizado.json";
 import CbdcABI from "../abi/CBDC.json";
+import TPFtABI from "../abi/TPFt.json";
 
 export const timeoutToResolve = 120;
 
@@ -10,7 +11,8 @@ export const RT_SYMBOL: string = process.env.RT_SYMBOL ?? "";
 
 export async function getPLInformation() {
     const cbdcResourceId = process.env.RESOURCEID_CBDC ?? "";
-    const dvpContractAddr = process.env.DVP_CONTRACT_ADDR ?? "";
+    const dvpContractAddr = process.env.DVP_CLAIM_ADDRESS ?? "";
+    const tpftResourceId = process.env.RESOURCEID_TPFT ?? "";
 
     const chainId = process.env.CHAINID ?? "";
     const rpcUrl = process.env.RPCURL ?? "";
@@ -25,6 +27,8 @@ export async function getPLInformation() {
     const wdResourceId = ethers.id("WalletDefault");
     const rtResourceId = ethers.id("RealTokenizado");
     const swapResourceId = ethers.id("RealDigitalSwap");
+    const dvpResourceId = ethers.id("DVP");
+    const tpftOpResourceId = ethers.id("TPFToperation");
 
     return {
         chainId,
@@ -37,7 +41,10 @@ export async function getPLInformation() {
         wdResourceId,
         rtResourceId,
         swapResourceId,
-        dvpContractAddr
+        dvpContractAddr,
+        tpftResourceId,
+        dvpResourceId,
+        tpftOpResourceId
     }
 }
 
@@ -59,6 +66,25 @@ export async function getBalanceCBDCSync(endpointContract: any, resourceId: stri
     const CBDCContract = await ethers.getContractAt(CbdcABI, addressCBDC, signer);
     const balance = await CBDCContract.balanceOf(walletBalance);
     return balance;
+}
+
+export async function getBalanceTPFTSync(endpointContract: any, resourceId: string | undefined, signer: any, walletBalance: string, tpftData: { acronym: string, code: string, maturityDate: number }) {
+    let tpftAddress = await endpointContract.getAddressByResourceId(resourceId ?? "");
+
+    // Checando saldo de TPFt no SELLER
+    let balanceTPFT = BigInt(0);
+    let tpftIdIFB = BigInt(0);
+    if (tpftAddress != ethers.ZeroAddress) {
+        const tpftContractB = await ethers.getContractAt(TPFtABI, tpftAddress, signer);
+        tpftIdIFB = await tpftContractB.getTPFtId(
+            tpftData.acronym,
+            tpftData.code,
+            tpftData.maturityDate
+        );
+        // expect(tpftIdIFB).not.eq(0);
+        balanceTPFT = tpftIdIFB != BigInt(0) ? await tpftContractB.balanceOf(walletBalance, tpftIdIFB) : BigInt(0);
+    }
+    return balanceTPFT;
 }
 
 export async function TimeoutExecution(execution: (retry:number) => Promise<[boolean, any]>) {
