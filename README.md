@@ -1,4 +1,6 @@
-## A - Etapa de setup: 
+# --- Participante ---
+
+### A - Etapa de setup: 
 
 Antes, preencha o .env, depois...
 
@@ -7,7 +9,7 @@ Antes, preencha o .env, depois...
 - `npm install`
 - No caso dos Particpantes: `npx hardhat run setup/setup-participant-contracts.ts --network rayls`
 
-##  B - Exemplos / Caso de uso (Participante):
+###  B - Exemplos / Caso de uso (Participante):
 
 Com o .env devidamente preenchido...
 
@@ -27,3 +29,18 @@ Com o .env devidamente preenchido...
 ### 4) Opcional utilitário - para consultar saldos, execute: 
 
  - `npx hardhat run exemplos/opcional_consultar-saldos.ts --network rayls`
+
+ </br>
+ </br>
+ </br>
+
+# --- Emissor de CDBC ---
+
+### 1) Setup
+
+- `npm install`
+- `npx hardhat run emissor/1-setup-cdbc-issuer.ts`
+
+### 2) Envia CDBC à instituição de destino
+
+- `npx hardhat run emissor/2-mint-and-crosstransfer.ts`
