@@ -14,6 +14,7 @@
     "@rayls/contracts": "^1.8.2",
     "dotenv": "^16.4.5",
     "ethers": "^6.12.1",
+    "ethers-decode-error": "^2.1.3",
     "hardhat": "^2.22.4"
   },
   "devDependencies": {

@@ -4,13 +4,13 @@ import RealTokenizadoABI from "../abi/RealTokenizado.json";
 import { getPLInformation } from "../utils/utils";
 
 async function main() {
-  const [signerIf] = await ethers.getSigners();
 
     const { 
         endpointContractAddr, 
         cbdcResourceId,
         rtResourceId,
-        swapResourceId
+        swapResourceId,
+        deployerSigner
       } = await getPLInformation();
 
     const MINTER_ROLE = ethers.id("MINTER_ROLE");
@@ -19,7 +19,7 @@ async function main() {
     const endpointIf = new ethers.Contract(
         endpointContractAddr,
         EndpointV1,
-        signerIf
+        deployerSigner
     );
 
     const cbdcAddr = await endpointIf.getAddressByResourceId(cbdcResourceId);
@@ -29,7 +29,7 @@ async function main() {
     const RTContract = new ethers.Contract(
         realTokenizadoAddr,
         RealTokenizadoABI,
-        signerIf
+        deployerSigner
     );
 
     console.log("[DEBUG] Granting MINTER...");

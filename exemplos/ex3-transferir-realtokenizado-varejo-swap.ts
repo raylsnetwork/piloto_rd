@@ -14,10 +14,12 @@ async function example4() {
     cbdcResourceId,
     wdResourceId,
     rtResourceId,
-    swapResourceId
+    swapResourceId,
+    deployerSigner,
+    clientSigner
   } = await getPLInformation();
 
-  const [deployerSigner, clientSigner] = await ethers.getSigners();
+  //const [deployerSigner, clientSigner] = await ethers.getSigners();
 
   const chainIdDestination = Number(process.env.DEST_CHAINID ?? 0);
   const destWdAcc = process.env.DEST_RESERVES_ACC ?? "";
@@ -102,6 +104,7 @@ async function example4() {
       clientSigner.address
     )) ?? BigInt(0);
   console.log("[DEBUG] balanceRTAfter:", balanceRTAfter);
+
 
   const balanceCDBCAfter =
     (await getBalanceCBDCSync(

@@ -18,6 +18,11 @@
         },
         {
           "internalType": "bytes32",
+          "name": "_strResourceId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
           "name": "_wdResourceId",
           "type": "bytes32"
         }
@@ -119,11 +124,34 @@
       "inputs": [
         {
           "internalType": "uint256[]",
+          "name": "_requesterChainId",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "address[]",
+          "name": "_walletDefault",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
           "name": "_amount",
           "type": "uint256[]"
         }
       ],
-      "name": "requestToMint",
+      "name": "receiveRequestToTransfer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "_amount",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "requestToTransfer",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -142,19 +170,13 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "wd",
+      "inputs": [],
+      "name": "strResourceId",
       "outputs": [
         {
-          "internalType": "address",
+          "internalType": "bytes32",
           "name": "",
-          "type": "address"
+          "type": "bytes32"
         }
       ],
       "stateMutability": "view",

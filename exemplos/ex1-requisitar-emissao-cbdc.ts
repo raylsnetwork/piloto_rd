@@ -14,10 +14,11 @@ async function example1() {
     endpointContractAddr, 
     cbdcResourceId,
     strResourceId,
-    wdResourceId
+    wdResourceId,
+    deployerSigner
   } = await getPLInformation();
 
-  const [deployerSigner] = await ethers.getSigners();
+  //const [deployerSigner] = await ethers.getSigners();
 
   const amountRequested = ethers.parseUnits("3000", 2);
 
@@ -45,11 +46,11 @@ async function example1() {
     deployerSigner
   );
 
-  console.log("[DEBUG] Invoking requestToMint...");
-  const txRequestToMint = await strContract.requestToMint(
+  console.log("[DEBUG] Invoking requestToTransfer...");
+  const txRequestToTransfer = await strContract.requestToTransfer(
     [amountRequested]
   );
-  await txRequestToMint.wait();
+  await txRequestToTransfer.wait();
   console.time("Wait balance update.");
   const balanceAfter = await TimeoutExecution(async (retry) => {
     logWithReplacement(`[DEBUG] Waiting CBDC balance to be updated: ${retry}`)
