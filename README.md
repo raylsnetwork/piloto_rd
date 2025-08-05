@@ -36,6 +36,8 @@ Com o .env devidamente preenchido...
 
 # --- Emissor de CDBC ---
 
+Antes de mais nada, preencher o .env - vide o arquivo `.env.example`. Muita atenção no preenchimento, em caso de dificuldades, procurar o time técnico da Parfin.
+
 ### 1) Setup
 
 - `npm install`
