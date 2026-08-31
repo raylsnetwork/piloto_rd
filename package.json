@@ -14,10 +14,10 @@
     "@rayls/contracts": "^1.8.2",
     "dotenv": "^16.4.5",
     "ethers": "^6.12.1",
-    "hardhat": "^2.22.4"
+    "hardhat": "^3.14.0"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^3.0.6",
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0"
+    "@nomicfoundation/hardhat-toolbox": "^7.0.0"
   }
 }
